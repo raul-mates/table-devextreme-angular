@@ -6,8 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./order-status.component.scss'],
 })
 export class OrderStatusComponent {
-  @Input() orderStatusClass!: string;
-  @Input() orderStatusLabel!: string;
+  @Input() orderStatus!: string;
 
   getOrderStatusLabel(orderStatus: string): string {
     const orderStatusMap: { [key: string]: string } = {

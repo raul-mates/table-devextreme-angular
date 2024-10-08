@@ -78,8 +78,7 @@
   >
     <div *dxTemplate="let data of 'orderStatusTemplate'">
       <app-order-status
-        [orderStatusClass]="data.data.orderStatus"
-        [orderStatusLabel]="data.data.orderStatus"
+        [orderStatus]="data.data.orderStatus"
       ></app-order-status>
     </div>
   </dxi-column>
