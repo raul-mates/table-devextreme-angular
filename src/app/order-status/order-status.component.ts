@@ -8,4 +8,17 @@ import { Component, Input } from '@angular/core';
 export class OrderStatusComponent {
   @Input() orderStatusClass!: string;
   @Input() orderStatusLabel!: string;
+
+  getOrderStatusLabel(orderStatus: string): string {
+    const orderStatusMap: { [key: string]: string } = {
+      APPROVED: 'Received ERP',
+      REOPENED: 'Reopened',
+      NOT_CREATED_YET: 'Not created',
+      SUBMITTED: 'Submitted',
+      REJECTED: 'Rejected',
+      OPEN: 'Open',
+    };
+
+    return orderStatusMap[orderStatus] || 'Unknown Brand';
+  }
 }

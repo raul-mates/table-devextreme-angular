@@ -1,3 +1,7 @@
-<span class="order-status-filter-item order-status-{{ orderStatusClass }}">
-  {{ orderStatusLabel }}
+<span
+  class="order-status-filter-item order-status-{{
+    orderStatusClass.toLowerCase()
+  }}"
+>
+  {{ getOrderStatusLabel(orderStatusLabel) }}
 </span>

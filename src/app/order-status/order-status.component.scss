@@ -1,46 +1,48 @@
-.order-status-filter-item {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin: 5px 0;
-  cursor: pointer;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  transition: background-color 0.2s ease;
-  width: 100%;
+.order-status {
+  &-filter-item {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s ease;
+    width: 100%;
 
-  &:hover {
-    opacity: 0.8;
+    &:hover {
+      opacity: 0.8;
+    }
   }
-}
 
-.order-status-approved {
-  color: #4c896d;
-  background-color: #dbfaec;
-}
+  &-approved {
+    color: #4c896d;
+    background-color: #dbfaec;
+  }
 
-.order-status-submitted {
-  color: #d08217;
-  background-color: #fce1bc;
-}
+  &-submitted {
+    color: #d08217;
+    background-color: #fce1bc;
+  }
 
-.order-status-rejected {
-  color: #c62828;
-  background-color: #ffb3b3;
-}
+  &-rejected {
+    color: #c62828;
+    background-color: #ffb3b3;
+  }
 
-.order-status-not_created_yet {
-  color: #656869;
-  background-color: #e9eaeb;
-}
+  &-not_created_yet {
+    color: #656869;
+    background-color: #e9eaeb;
+  }
 
-.order-status-reopened {
-  color: #ce0251;
-  background-color: #fbdae6;
-}
+  &-reopened {
+    color: #ce0251;
+    background-color: #fbdae6;
+  }
 
-.order-status-open {
-  color: #4786a0;
-  background-color: #e3f3fa;
+  &-open {
+    color: #4786a0;
+    background-color: #e3f3fa;
+  }
 }
