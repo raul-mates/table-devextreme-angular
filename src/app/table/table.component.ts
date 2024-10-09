@@ -29,6 +29,7 @@ export class TableComponent {
       const actions = item.actions.map((action: ActionKeys, index: number) => ({
         id: index + 1,
         name: ACTIONS[action]?.value || action,
+        label: ACTIONS[action]?.label,
         icon: ACTIONS[action]?.icon || '',
       }));
       return { ...item, actions };
@@ -56,6 +57,19 @@ export class TableComponent {
     return brandMap[brandId] || 'Unknown Brand';
   }
 
+  getOrderStatusLabel(orderStatus: string): string {
+    const orderStatusMap: { [key: string]: string } = {
+      APPROVED: 'Received ERP',
+      REOPENED: 'Reopened',
+      NOT_CREATED_YET: 'Not created',
+      SUBMITTED: 'Submitted',
+      REJECTED: 'Rejected',
+      OPEN: 'Open',
+    };
+
+    return orderStatusMap[orderStatus] || 'Unknown Brand';
+  }
+
   brandHeaderFilter: DxoHeaderFilterComponent['dataSource'] = [
     {
       text: 'Street One',
@@ -77,5 +91,9 @@ export class TableComponent {
 
   onIconClicked(data: any) {
     console.log(data);
+  }
+
+  onItemClick(event: any) {
+    console.log(event.itemData.name);
   }
 }

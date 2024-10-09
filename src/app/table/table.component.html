@@ -73,9 +73,15 @@
   <dxi-column
     dataField="orderStatus"
     caption="Order Status"
-    [allowEditing]="false"
     [allowFiltering]="true"
-  ></dxi-column>
+    cellTemplate="orderStatusTemplate"
+  >
+    <div *dxTemplate="let data of 'orderStatusTemplate'">
+      <app-order-status
+        [orderStatus]="data.data.orderStatus"
+      ></app-order-status>
+    </div>
+  </dxi-column>
 
   <dxi-column
     dataField="rejectReason"
@@ -188,10 +194,11 @@
         <dx-drop-down-button
           [items]="data.data.actions"
           icon="more"
-          displayExpr="name"
+          displayExpr="label"
           stylingMode="text"
           [showArrowIcon]="false"
           [dropDownOptions]="{ width: 171 }"
+          (onItemClick)="onItemClick($event)"
         >
         </dx-drop-down-button>
       </div>

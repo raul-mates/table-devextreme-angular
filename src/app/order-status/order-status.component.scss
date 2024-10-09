@@ -1,0 +1,48 @@
+.order-status {
+  &-filter-item {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s ease;
+    width: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &-approved {
+    color: #4c896d;
+    background-color: #dbfaec;
+  }
+
+  &-submitted {
+    color: #d08217;
+    background-color: #fce1bc;
+  }
+
+  &-rejected {
+    color: #c62828;
+    background-color: #ffb3b3;
+  }
+
+  &-not_created_yet {
+    color: #656869;
+    background-color: #e9eaeb;
+  }
+
+  &-reopened {
+    color: #ce0251;
+    background-color: #fbdae6;
+  }
+
+  &-open {
+    color: #4786a0;
+    background-color: #e3f3fa;
+  }
+}
