@@ -1,5 +1,18 @@
 <span
-  class="order-status-filter-item order-status-{{ orderStatus.toLowerCase() }}"
+  class="order-status-filter-item order-status-{{
+    data.orderStatus.toLowerCase()
+  }}"
+  style="display: flex; align-items: center; justify-content: center; gap: 5px"
+  (click)="handleReopenClicked(data.orderStatus, data)"
 >
-  {{ getOrderStatusLabel(orderStatus) }}
+  {{ getOrderStatusLabel(data.orderStatus) }}
+  <i *ngIf="data.orderStatus === 'REOPENED'" class="fa-regular fa-message"></i>
+  <div *ngIf="data.orderStatus === 'SUBMITTED'">
+    <i class="fa-solid fa-thumbs-up" style="margin-right: 5px"></i>
+    <i class="fa-solid fa-ban"></i>
+  </div>
 </span>
+<app-modal
+  *ngIf="modalService.showModal()"
+  [rowData]="modalService.getRowData()"
+></app-modal>

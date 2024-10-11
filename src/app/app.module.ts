@@ -15,9 +15,10 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { OrderStatusComponent } from './order-status/order-status.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, OrderStatusComponent],
+  declarations: [AppComponent, TableComponent, OrderStatusComponent, ModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

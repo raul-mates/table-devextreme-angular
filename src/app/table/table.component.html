@@ -77,9 +77,7 @@
     cellTemplate="orderStatusTemplate"
   >
     <div *dxTemplate="let data of 'orderStatusTemplate'">
-      <app-order-status
-        [orderStatus]="data.data.orderStatus"
-      ></app-order-status>
+      <app-order-status [data]="data.data"></app-order-status>
     </div>
   </dxi-column>
 
@@ -91,7 +89,12 @@
     cellTemplate="rejectReasonTemplate"
   >
     <div *dxTemplate="let data of 'rejectReasonTemplate'" class="reject-reason">
-      <input type="text" class="reject-reason__input" />
+      <input
+        type="text"
+        class="reject-reason__input"
+        [value]="data.data.rejectReason"
+        (input)="debouncedRejectReasonChange($event, data.data)"
+      />
       <div class="reject-reason__icon-container">
         <fa-icon
           [icon]="faPencilAlt"
@@ -198,7 +201,6 @@
           stylingMode="text"
           [showArrowIcon]="false"
           [dropDownOptions]="{ width: 171 }"
-          (onItemClick)="onItemClick($event)"
         >
         </dx-drop-down-button>
       </div>

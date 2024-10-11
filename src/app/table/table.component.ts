@@ -3,6 +3,7 @@ import { MockDataService } from '../mockData/Table data';
 import { faPencilAlt, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
 import { ACTIONS } from '../mockData/Actions 1';
+import { ModalService } from '../modal.service';
 
 type ActionKeys = keyof typeof ACTIONS;
 
@@ -16,6 +17,7 @@ export class TableComponent {
   customerId: string = '';
   faPencilAlt = faPencilAlt;
   faEllipsis = faEllipsis;
+  debouncedRejectReasonChange: Function;
 
   brandDataSource = [
     { id: 1, name: 'Street One' },
@@ -24,7 +26,14 @@ export class TableComponent {
     { id: 6, name: 'Street One Studio' },
   ];
 
-  constructor(private mockDataService: MockDataService) {
+  constructor(
+    private mockDataService: MockDataService,
+    public modalService: ModalService
+  ) {
+    this.debouncedRejectReasonChange = this.debounce(
+      this.onRejectReasonChange,
+      800
+    );
     this.dataSource = this.mockDataService.getData().map((item: any) => {
       const actions = item.actions.map((action: ActionKeys, index: number) => ({
         id: index + 1,
@@ -89,11 +98,24 @@ export class TableComponent {
     },
   ];
 
-  onIconClicked(data: any) {
-    console.log(data);
+  onRejectReasonChange(event: Event, rowData: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    rowData.rejectReason = inputElement.value;
   }
 
-  onItemClick(event: any) {
-    console.log(event.itemData.name);
+  debounce(
+    func: (...args: any[]) => void,
+    wait: number
+  ): (...args: any[]) => void {
+    let timeoutId: any;
+
+    return (...args: any[]) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, wait);
+    };
   }
 }
