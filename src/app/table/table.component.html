@@ -200,7 +200,8 @@
           displayExpr="label"
           stylingMode="text"
           [showArrowIcon]="false"
-          [dropDownOptions]="{ width: 171 }"
+          [dropDownOptions]="{ width: 172 }"
+          (onItemClick)="onDropDownItemClicked($event, data.data)"
         >
         </dx-drop-down-button>
       </div>

@@ -31,4 +31,10 @@ export class OrderStatusComponent {
       this.modalService.openModal(rowData);
     }
   }
+
+  handleIconClicked(data: any, element: HTMLElement) {
+    if (element.classList.contains('icon-approve'))
+      data.orderStatus = 'APPROVED';
+    else data.orderStatus = 'REJECTED';
+  }
 }

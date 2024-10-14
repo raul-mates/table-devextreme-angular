@@ -118,4 +118,22 @@ export class TableComponent {
       }, wait);
     };
   }
+
+  onDropDownItemClicked(event: any, rowData: any) {
+    const clickedAction = event.itemData;
+    if (clickedAction.name === 'DELETE') {
+      this.deleteItem(rowData);
+    }
+
+    if (clickedAction.name === 'SUBMIT') {
+      rowData.orderStatus = 'SUBMITTED';
+    }
+  }
+
+  deleteItem(rowData: any) {
+    const index = this.dataSource.indexOf(rowData);
+    if (index > -1) {
+      this.dataSource.splice(index, 1);
+    }
+  }
 }

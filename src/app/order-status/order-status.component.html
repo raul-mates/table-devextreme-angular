@@ -8,8 +8,17 @@
   {{ getOrderStatusLabel(data.orderStatus) }}
   <i *ngIf="data.orderStatus === 'REOPENED'" class="fa-regular fa-message"></i>
   <div *ngIf="data.orderStatus === 'SUBMITTED'">
-    <i class="fa-solid fa-thumbs-up" style="margin-right: 5px"></i>
-    <i class="fa-solid fa-ban"></i>
+    <i
+      #approveIcon
+      class="fa-solid fa-thumbs-up icon-approve"
+      (click)="handleIconClicked(data, approveIcon)"
+      style="margin-right: 5px"
+    ></i>
+    <i
+      #rejectIcon
+      class="fa-solid fa-ban icon-reject"
+      (click)="handleIconClicked(data, rejectIcon)"
+    ></i>
   </div>
 </span>
 <app-modal
