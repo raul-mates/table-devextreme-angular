@@ -2,6 +2,8 @@
   [dataSource]="dataSource"
   [allowColumnResizing]="true"
   [columnAutoWidth]="true"
+  [width]="'100%'"
+  [height]="'800px'"
   keyExpr="customerId"
 >
   <dxo-header-filter [visible]="true"></dxo-header-filter>
@@ -186,6 +188,24 @@
   </dxi-column>
 
   <dxi-column
+    dataField="orderPieces"
+    caption="Order Pieces"
+    [visible]="true"
+  ></dxi-column>
+
+  <dxi-column
+    dataField="salesPrice"
+    caption="Sales Price"
+    [visible]="true"
+  ></dxi-column>
+
+  <dxi-column
+    dataField="actualOrderValue"
+    caption="Actual Order Value"
+    [visible]="true"
+  ></dxi-column>
+
+  <dxi-column
     dataField="actions"
     caption=""
     [allowEditing]="false"
@@ -208,17 +228,31 @@
     </div>
   </dxi-column>
 
-  <!-- <dxi-column
-    dataField="actions"
-    caption=""
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="cellTemplate"
-  >
-    <div *dxTemplate="let data of 'cellTemplate'" class="template-container">
-      <div *ngIf="data.data.actions.length !== 0">
-        <dx-select-box [dataSource]="data.data.actions"> </dx-select-box>
-      </div>
-    </div>
-  </dxi-column> -->
+  <dxo-summary>
+    <dxi-total-item
+      column="orderPieces"
+      summaryType="sum"
+      displayFormat="Total: {0}"
+    ></dxi-total-item>
+
+    <dxi-total-item
+      column="salesPrice"
+      summaryType="sum"
+      valueFormat="currency"
+      displayFormat="Total: {0}"
+    ></dxi-total-item>
+
+    <dxi-total-item
+      column="actualOrderValue"
+      summaryType="sum"
+      valueFormat="currency"
+      displayFormat="Total: {0}"
+    ></dxi-total-item>
+
+    <dxi-total-item
+      column="actualVsPreviousYearAbsoluteDifference"
+      summaryType="sum"
+      displayFormat="Total: {0}"
+    ></dxi-total-item>
+  </dxo-summary>
 </dx-data-grid>

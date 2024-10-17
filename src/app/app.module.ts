@@ -11,6 +11,7 @@ import {
   DxButtonModule,
   DevExtremeModule,
   DxDropDownButtonModule,
+  DxChartModule,
 } from 'devextreme-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +19,12 @@ import { OrderStatusComponent } from './order-status/order-status.component';
 import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, OrderStatusComponent, ModalComponent],
+  declarations: [
+    AppComponent,
+    TableComponent,
+    OrderStatusComponent,
+    ModalComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,6 +36,7 @@ import { ModalComponent } from './modal/modal.component';
     DxTemplateModule,
     DevExtremeModule,
     DxDropDownButtonModule,
+    DxChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

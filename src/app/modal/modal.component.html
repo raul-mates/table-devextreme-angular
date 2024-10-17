@@ -1,32 +1,81 @@
 <div class="modal-background">
-  <div class="modal-content">
-    <div class="modal-content__input-container">
-      <label
-        for="rejectReason"
-        class="modal-content__input-container__input-label"
-        >Reject Reason</label
-      >
-      <input
-        type="text"
-        id="rejectReason"
-        [value]="rowData.rejectReason"
-        class="modal-content__input-container__input"
-        [(ngModel)]="inputValue"
-      />
+  <div
+    class="modal-content"
+    [style.width]="modalService.modalForInsights() === false ? 'auto' : '47%'"
+  >
+    <div
+      class="modal-content__wrapper-reject-reason"
+      *ngIf="modalService.modalForInsights() === false"
+    >
+      <div class="modal-content__input-container">
+        <label
+          for="rejectReason"
+          class="modal-content__input-container__input-label"
+          >Reject Reason</label
+        >
+        <input
+          type="text"
+          id="rejectReason"
+          [value]="rowData.rejectReason"
+          class="modal-content__input-container__input"
+          [(ngModel)]="inputValue"
+        />
+      </div>
+      <div class="modal-content__buttons-container">
+        <button
+          (click)="modalService.closeModal(); onSaveClicked()"
+          class="modal-content__buttons-container--btn-save modal-content__buttons-container--btn"
+        >
+          Save
+        </button>
+        <button
+          (click)="modalService.closeModal()"
+          class="modal-content__buttons-container--btn-cancel modal-content__buttons-container--btn"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
-    <div class="modal-content__buttons-container">
-      <button
-        (click)="modalService.closeModal(); onSaveClicked()"
-        class="modal-content__buttons-container--btn-save modal-content__buttons-container--btn"
+    <div
+      class="modal-content__wrapper-insights"
+      *ngIf="modalService.modalForInsights() === true"
+    >
+      <dx-chart
+        id="chart"
+        [dataSource]="chartData"
+        type="bar"
+        palette="Harmony Light"
       >
-        Save
-      </button>
-      <button
-        (click)="modalService.closeModal()"
-        class="modal-content__buttons-container--btn-cancel modal-content__buttons-container--btn"
-      >
-        Cancel
-      </button>
+        <dxo-argument-axis>
+          <dxo-title text="Sold pieces"></dxo-title>
+          <dxo-label>
+            <dxo-format type="string"></dxo-format>
+          </dxo-label>
+        </dxo-argument-axis>
+
+        <dxo-value-axis>
+          <dxo-title text="Number of orders"></dxo-title>
+          <dxo-label>
+            <dxo-format type="fixedPoint"></dxo-format>
+          </dxo-label>
+        </dxo-value-axis>
+
+        <dxi-series
+          argumentField="range"
+          valueField="ordersCount"
+          name="Number of orders"
+          type="bar"
+          color="#FFA726"
+        >
+        </dxi-series>
+
+        <dxo-tooltip
+          [enabled]="true"
+          [contentTemplate]="customTooltip"
+        ></dxo-tooltip>
+
+        <dxo-legend [visible]="true" position="outside"></dxo-legend>
+      </dx-chart>
     </div>
   </div>
 </div>

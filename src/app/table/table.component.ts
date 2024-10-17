@@ -128,6 +128,11 @@ export class TableComponent {
     if (clickedAction.name === 'SUBMIT') {
       rowData.orderStatus = 'SUBMITTED';
     }
+
+    if (clickedAction.name === 'INSIGHTS') {
+      this.modalService.openModal(rowData);
+      this.modalService.modalForInsights.set(true);
+    }
   }
 
   deleteItem(rowData: any) {

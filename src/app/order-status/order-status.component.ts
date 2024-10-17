@@ -29,12 +29,13 @@ export class OrderStatusComponent {
   handleReopenClicked(status: string, rowData: any) {
     if (status === 'REOPENED') {
       this.modalService.openModal(rowData);
+      this.modalService.modalForInsights.set(false);
     }
   }
 
   handleIconClicked(data: any, element: HTMLElement) {
-    if (element.classList.contains('icon-approve'))
-      data.orderStatus = 'APPROVED';
-    else data.orderStatus = 'REJECTED';
+    data.orderStatus = element.classList.contains('icon-approve')
+      ? 'APPROVED'
+      : 'REJECTED';
   }
 }

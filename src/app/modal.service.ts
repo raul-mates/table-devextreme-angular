@@ -5,6 +5,7 @@ import { Injectable, signal } from '@angular/core';
 })
 export class ModalService {
   showModal = signal<boolean>(false);
+  modalForInsights = signal<boolean>(false);
   rejectReason = signal<string>('');
   private modalRowData: any = null;
 
