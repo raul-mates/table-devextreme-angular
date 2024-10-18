@@ -10,10 +10,6 @@
     color: white;
     transition: background-color 0.2s ease;
     width: 100%;
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 
   &-approved {
@@ -39,10 +35,24 @@
   &-reopened {
     color: #ce0251;
     background-color: #fbdae6;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &-open {
     color: #4786a0;
     background-color: #e3f3fa;
+  }
+}
+
+.icon {
+  &-approve:hover {
+    color: green;
+  }
+
+  &-reject:hover {
+    color: red;
   }
 }
