@@ -12,11 +12,15 @@ import {
   DevExtremeModule,
   DxDropDownButtonModule,
   DxChartModule,
+  DxDrawerModule,
+  DxToolbarModule,
 } from 'devextreme-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { OrderStatusComponent } from './order-status/order-status.component';
 import { ModalComponent } from './modal/modal.component';
+import { DrawerComponent } from './drawer/drawer.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,8 @@ import { ModalComponent } from './modal/modal.component';
     TableComponent,
     OrderStatusComponent,
     ModalComponent,
+    DrawerComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,8 @@ import { ModalComponent } from './modal/modal.component';
     DevExtremeModule,
     DxDropDownButtonModule,
     DxChartModule,
+    DxDrawerModule,
+    DxToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

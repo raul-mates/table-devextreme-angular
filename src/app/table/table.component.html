@@ -1,258 +1,276 @@
-<dx-data-grid
-  [dataSource]="dataSource"
-  [allowColumnResizing]="true"
-  [columnAutoWidth]="true"
-  [width]="'100%'"
-  [height]="'800px'"
-  keyExpr="customerId"
->
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
+<div class="flex-container">
+  <div class="table-container">
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [allowColumnResizing]="true"
+      [columnAutoWidth]="true"
+      [width]="'fit-content'"
+      [height]="'800px'"
+      keyExpr="customerId"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [showBorders]="true"
+      id="gridContainer"
+    >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-  <dxi-column
-    dataField="brand"
-    caption="Brand"
-    cellTemplate="brandTemplate"
-    [allowEditing]="false"
-    [allowFiltering]="true"
-    headerFilter="{
+      <dxi-column
+        dataField="brand"
+        caption="Brand"
+        cellTemplate="brandTemplate"
+        [allowEditing]="false"
+        [allowFiltering]="true"
+        headerFilter="{
       dataSource: brandDataSource
     }"
-  >
-    <dxo-header-filter [dataSource]="brandHeaderFilter"></dxo-header-filter>
-    <div *dxTemplate="let data of 'brandTemplate'">
-      {{ getBrandNameFromId(data.data.brand) }}
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="customerNumber"
-    caption="Customer Number"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-  ></dxi-column>
-
-  <dxi-column
-    dataField="customerName"
-    caption="POS Name"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    [width]="165"
-    cellTemplate="customerNameTemplate"
-  >
-    <div *dxTemplate="let item of 'customerNameTemplate'">
-      <div
-        id="pos-name-{{ item.data.customerId }}"
-        style="text-overflow: ellipsis; overflow: hidden"
       >
-        {{ item.data.customerName }}
-      </div>
-      <dx-tooltip
-        [target]="'#pos-name-' + item.data.customerId"
-        showEvent="mouseenter"
-        hideEvent="mouseleave"
-        [hideOnOutsideClick]="false"
-        *ngIf="item.data.customerName.length >= 23"
+        <dxo-header-filter [dataSource]="brandHeaderFilter"></dxo-header-filter>
+        <div *dxTemplate="let data of 'brandTemplate'">
+          {{ getBrandNameFromId(data.data.brand) }}
+        </div>
+      </dxi-column>
+
+      <dxi-column
+        dataField="customerNumber"
+        caption="Customer Number"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+      ></dxi-column>
+
+      <dxi-column
+        dataField="customerName"
+        caption="POS Name"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        [width]="165"
+        cellTemplate="customerNameTemplate"
       >
-        {{ item.data.customerName }}
-      </dx-tooltip>
-    </div>
-  </dxi-column>
+        <div *dxTemplate="let item of 'customerNameTemplate'">
+          <div
+            id="pos-name-{{ item.data.customerId }}"
+            style="text-overflow: ellipsis; overflow: hidden"
+          >
+            {{ item.data.customerName }}
+          </div>
+          <dx-tooltip
+            [target]="'#pos-name-' + item.data.customerId"
+            showEvent="mouseenter"
+            hideEvent="mouseleave"
+            [hideOnOutsideClick]="false"
+            *ngIf="item.data.customerName.length >= 23"
+          >
+            {{ item.data.customerName }}
+          </dx-tooltip>
+        </div>
+      </dxi-column>
 
-  <dxi-column
-    dataField="posType"
-    caption="POS Type"
-    [allowEditing]="false"
-    [allowFiltering]="true"
-  ></dxi-column>
+      <dxi-column
+        dataField="posType"
+        caption="POS Type"
+        [allowEditing]="false"
+        [allowFiltering]="true"
+      ></dxi-column>
 
-  <dxi-column
-    dataField="city"
-    caption="City"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-  ></dxi-column>
+      <dxi-column
+        dataField="city"
+        caption="City"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+      ></dxi-column>
 
-  <dxi-column
-    dataField="orderStatus"
-    caption="Order Status"
-    [allowFiltering]="true"
-    cellTemplate="orderStatusTemplate"
-  >
-    <div *dxTemplate="let data of 'orderStatusTemplate'">
-      <app-order-status [data]="data.data"></app-order-status>
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="rejectReason"
-    caption="Reject Reason"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="rejectReasonTemplate"
-  >
-    <div *dxTemplate="let data of 'rejectReasonTemplate'" class="reject-reason">
-      <input
-        type="text"
-        class="reject-reason__input"
-        [value]="data.data.rejectReason"
-        (input)="debouncedRejectReasonChange($event, data.data)"
-      />
-      <div class="reject-reason__icon-container">
-        <fa-icon
-          [icon]="faPencilAlt"
-          class="reject-reason__icon-container__edit-icon"
-        ></fa-icon>
-      </div>
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="orderValuePreviousYear"
-    caption="Order Value PY"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="orderValuePreviousYearTemplate"
-  >
-    <div *dxTemplate="let data of 'orderValuePreviousYearTemplate'">
-      {{
-        data.data.orderValuePreviousYear
-          ? (data.data.orderValuePreviousYear | number : "1.2-2") +
-            " " +
-            getCurrencySymbol(data.data.currency)
-          : "-"
-      }}
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="orderValueBudgetRelevant"
-    caption="Budget Relevant"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="orderValueBudgetRelevantTemplate"
-  >
-    <div *dxTemplate="let data of 'orderValueBudgetRelevantTemplate'">
-      {{
-        data.data.orderValueBudgetRelevant
-          ? (data.data.orderValueBudgetRelevant | number : "1.2-2") +
-            " " +
-            getCurrencySymbol(data.data.currency)
-          : "-"
-      }}
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="actualVsPreviousYearPercentage"
-    caption="AC/PY %"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="actualVsPreviousYearPercentageTemplate"
-  >
-    <div *dxTemplate="let data of 'actualVsPreviousYearPercentageTemplate'">
-      {{
-        data.data.actualVsPreviousYearPercentage === null
-          ? "-"
-          : data.data.actualVsPreviousYearPercentage.toFixed(2) + "%"
-      }}
-    </div>
-  </dxi-column>
-
-  <dxi-column
-    dataField="actualVsPreviousYearAbsoluteDifference"
-    caption="AC/PY"
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="actualVsPreviousYearAbsoluteDifferenceTemplate"
-  >
-    <div
-      *dxTemplate="let data of 'actualVsPreviousYearAbsoluteDifferenceTemplate'"
-    >
-      <span
-        [ngStyle]="{
-          color:
-            data.data.actualVsPreviousYearAbsoluteDifference > 0
-              ? '#03bc00'
-              : data.data.actualVsPreviousYearAbsoluteDifference < 0
-              ? '#c00000'
-              : 'inherit'
-        }"
+      <dxi-column
+        dataField="orderStatus"
+        caption="Order Status"
+        [allowFiltering]="true"
+        cellTemplate="orderStatusTemplate"
       >
-        {{
-          data.data.actualVsPreviousYearAbsoluteDifference === null
-            ? "-"
-            : data.data.actualVsPreviousYearAbsoluteDifference.toFixed(2)
-        }}
-      </span>
-    </div>
-  </dxi-column>
+        <div *dxTemplate="let data of 'orderStatusTemplate'">
+          <app-order-status [data]="data.data"></app-order-status>
+        </div>
+      </dxi-column>
 
-  <dxi-column
-    dataField="orderPieces"
-    caption="Order Pieces"
-    [visible]="true"
-  ></dxi-column>
-
-  <dxi-column
-    dataField="salesPrice"
-    caption="Sales Price"
-    [visible]="true"
-  ></dxi-column>
-
-  <dxi-column
-    dataField="actualOrderValue"
-    caption="Actual Order Value"
-    [visible]="true"
-  ></dxi-column>
-
-  <dxi-column
-    dataField="actions"
-    caption=""
-    [allowEditing]="false"
-    [allowFiltering]="false"
-    cellTemplate="cellTemplate"
-  >
-    <div *dxTemplate="let data of 'cellTemplate'" class="template-container">
-      <div *ngIf="data.data.actions.length !== 0">
-        <dx-drop-down-button
-          [items]="data.data.actions"
-          icon="more"
-          displayExpr="label"
-          stylingMode="text"
-          [showArrowIcon]="false"
-          [dropDownOptions]="{ width: 172 }"
-          (onItemClick)="onDropDownItemClicked($event, data.data)"
+      <dxi-column
+        dataField="rejectReason"
+        caption="Reject Reason"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        [cssClass]="'myClass'"
+        cellTemplate="rejectReasonTemplate"
+      >
+        <div
+          *dxTemplate="let data of 'rejectReasonTemplate'"
+          class="reject-reason"
         >
-        </dx-drop-down-button>
-      </div>
-    </div>
-  </dxi-column>
+          <input
+            type="text"
+            class="reject-reason__input"
+            [value]="data.data.rejectReason"
+            (input)="debouncedRejectReasonChange($event, data.data)"
+          />
+          <div class="reject-reason__icon-container">
+            <fa-icon
+              [icon]="faPencilAlt"
+              class="reject-reason__icon-container__edit-icon"
+            ></fa-icon>
+          </div>
+        </div>
+      </dxi-column>
 
-  <dxo-summary>
-    <dxi-total-item
-      column="orderPieces"
-      summaryType="sum"
-      displayFormat="Total: {0}"
-    ></dxi-total-item>
+      <dxi-column
+        dataField="orderValuePreviousYear"
+        caption="Order Value PY"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        cellTemplate="orderValuePreviousYearTemplate"
+      >
+        <div *dxTemplate="let data of 'orderValuePreviousYearTemplate'">
+          {{
+            data.data.orderValuePreviousYear
+              ? (data.data.orderValuePreviousYear | number : "1.2-2") +
+                " " +
+                getCurrencySymbol(data.data.currency)
+              : "-"
+          }}
+        </div>
+      </dxi-column>
 
-    <dxi-total-item
-      column="salesPrice"
-      summaryType="sum"
-      valueFormat="currency"
-      displayFormat="Total: {0}"
-    ></dxi-total-item>
+      <dxi-column
+        dataField="orderValueBudgetRelevant"
+        caption="Budget Relevant"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        cellTemplate="orderValueBudgetRelevantTemplate"
+      >
+        <div *dxTemplate="let data of 'orderValueBudgetRelevantTemplate'">
+          {{
+            data.data.orderValueBudgetRelevant
+              ? (data.data.orderValueBudgetRelevant | number : "1.2-2") +
+                " " +
+                getCurrencySymbol(data.data.currency)
+              : "-"
+          }}
+        </div>
+      </dxi-column>
 
-    <dxi-total-item
-      column="actualOrderValue"
-      summaryType="sum"
-      valueFormat="currency"
-      displayFormat="Total: {0}"
-    ></dxi-total-item>
+      <dxi-column
+        dataField="actualVsPreviousYearPercentage"
+        caption="AC/PY %"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        cellTemplate="actualVsPreviousYearPercentageTemplate"
+      >
+        <div *dxTemplate="let data of 'actualVsPreviousYearPercentageTemplate'">
+          {{
+            data.data.actualVsPreviousYearPercentage === null
+              ? "-"
+              : data.data.actualVsPreviousYearPercentage.toFixed(2) + "%"
+          }}
+        </div>
+      </dxi-column>
 
-    <dxi-total-item
-      column="actualVsPreviousYearAbsoluteDifference"
-      summaryType="sum"
-      displayFormat="Total: {0}"
-    ></dxi-total-item>
-  </dxo-summary>
-</dx-data-grid>
+      <dxi-column
+        dataField="actualVsPreviousYearAbsoluteDifference"
+        caption="AC/PY"
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        cellTemplate="actualVsPreviousYearAbsoluteDifferenceTemplate"
+      >
+        <div
+          *dxTemplate="
+            let data of 'actualVsPreviousYearAbsoluteDifferenceTemplate'
+          "
+        >
+          <span
+            [ngStyle]="{
+              color:
+                data.data.actualVsPreviousYearAbsoluteDifference > 0
+                  ? '#03bc00'
+                  : data.data.actualVsPreviousYearAbsoluteDifference < 0
+                  ? '#c00000'
+                  : 'inherit'
+            }"
+          >
+            {{
+              data.data.actualVsPreviousYearAbsoluteDifference === null
+                ? "-"
+                : data.data.actualVsPreviousYearAbsoluteDifference.toFixed(2)
+            }}
+          </span>
+        </div>
+      </dxi-column>
+
+      <dxi-column
+        dataField="orderPieces"
+        caption="Order Pieces"
+        [visible]="true"
+      ></dxi-column>
+
+      <dxi-column
+        dataField="salesPrice"
+        caption="Sales Price"
+        [visible]="true"
+      ></dxi-column>
+
+      <dxi-column
+        dataField="actualOrderValue"
+        caption="Actual Order Value"
+        [visible]="true"
+      ></dxi-column>
+
+      <dxi-column
+        dataField="actions"
+        caption=""
+        [allowEditing]="false"
+        [allowFiltering]="false"
+        cellTemplate="cellTemplate"
+      >
+        <div
+          *dxTemplate="let data of 'cellTemplate'"
+          class="template-container"
+        >
+          <div *ngIf="data.data.actions.length !== 0">
+            <dx-drop-down-button
+              [items]="data.data.actions"
+              icon="more"
+              displayExpr="label"
+              stylingMode="text"
+              [showArrowIcon]="false"
+              [dropDownOptions]="{ width: 172 }"
+              (onItemClick)="onDropDownItemClicked($event, data.data)"
+            >
+            </dx-drop-down-button>
+          </div>
+        </div>
+      </dxi-column>
+
+      <dxo-summary>
+        <dxi-total-item
+          column="orderPieces"
+          summaryType="sum"
+          displayFormat="Total: {0}"
+        ></dxi-total-item>
+
+        <dxi-total-item
+          column="salesPrice"
+          summaryType="sum"
+          valueFormat="currency"
+          displayFormat="Total: {0}"
+        ></dxi-total-item>
+
+        <dxi-total-item
+          column="actualOrderValue"
+          summaryType="sum"
+          valueFormat="currency"
+          displayFormat="Total: {0}"
+        ></dxi-total-item>
+
+        <dxi-total-item
+          column="actualVsPreviousYearAbsoluteDifference"
+          summaryType="sum"
+          displayFormat="Total: {0}"
+          [customizeText]="customizeTotalText"
+        ></dxi-total-item>
+      </dxo-summary>
+    </dx-data-grid>
+  </div>
+</div>

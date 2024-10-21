@@ -43,6 +43,8 @@ export class TableComponent {
       }));
       return { ...item, actions };
     });
+
+    this.customizeTotalText = this.customizeTotalText.bind(this);
   }
 
   getCurrencySymbol(currency: string): string {
@@ -140,5 +142,11 @@ export class TableComponent {
     if (index > -1) {
       this.dataSource.splice(index, 1);
     }
+  }
+
+  customizeTotalText(summaryInfo: any) {
+    return summaryInfo.value
+      ? `Total: ${summaryInfo.value.toFixed(2)}`
+      : 'Total: 0.00';
   }
 }
