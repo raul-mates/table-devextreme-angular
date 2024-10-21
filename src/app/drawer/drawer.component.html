@@ -1,0 +1,13 @@
+<dx-drawer
+  template="template"
+  [(opened)]="isOpen"
+  [revealMode]="'slide'"
+  [closeOnOutsideClick]="true"
+  [openedStateMode]="'push'"
+  [position]="'right'"
+>
+  <div *dxTemplate="let data of 'template'">
+    <app-chart></app-chart>
+  </div>
+  <app-table></app-table>
+</dx-drawer>
