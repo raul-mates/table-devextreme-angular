@@ -1,4 +1,4 @@
-<div class="flex-container">
+<div class="flex-container" style="padding: 0 20px">
   <div class="table-container">
     <dx-data-grid
       [dataSource]="dataSource"
@@ -18,6 +18,7 @@
         dataField="brand"
         caption="Brand"
         cellTemplate="brandTemplate"
+        [cssClass]="'myClass'"
         [allowEditing]="false"
         [allowFiltering]="true"
         headerFilter="{
@@ -33,6 +34,7 @@
       <dxi-column
         dataField="customerNumber"
         caption="Customer Number"
+        [cssClass]="'myClass'"
         [allowEditing]="false"
         [allowFiltering]="false"
       ></dxi-column>
@@ -42,6 +44,7 @@
         caption="POS Name"
         [allowEditing]="false"
         [allowFiltering]="false"
+        [cssClass]="'myClass'"
         [width]="165"
         cellTemplate="customerNameTemplate"
       >
@@ -68,6 +71,7 @@
         dataField="posType"
         caption="POS Type"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="true"
       ></dxi-column>
 
@@ -75,6 +79,7 @@
         dataField="city"
         caption="City"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
       ></dxi-column>
 
@@ -82,6 +87,7 @@
         dataField="orderStatus"
         caption="Order Status"
         [allowFiltering]="true"
+        [cssClass]="'myClass'"
         cellTemplate="orderStatusTemplate"
       >
         <div *dxTemplate="let data of 'orderStatusTemplate'">
@@ -105,7 +111,7 @@
             type="text"
             class="reject-reason__input"
             [value]="data.data.rejectReason"
-            (input)="debouncedRejectReasonChange($event, data.data)"
+            (blur)="onRejectReasonChange($event, data.data)"
           />
           <div class="reject-reason__icon-container">
             <fa-icon
@@ -120,6 +126,7 @@
         dataField="orderValuePreviousYear"
         caption="Order Value PY"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
         cellTemplate="orderValuePreviousYearTemplate"
       >
@@ -138,6 +145,7 @@
         dataField="orderValueBudgetRelevant"
         caption="Budget Relevant"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
         cellTemplate="orderValueBudgetRelevantTemplate"
       >
@@ -156,6 +164,7 @@
         dataField="actualVsPreviousYearPercentage"
         caption="AC/PY %"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
         cellTemplate="actualVsPreviousYearPercentageTemplate"
       >
@@ -172,6 +181,7 @@
         dataField="actualVsPreviousYearAbsoluteDifference"
         caption="AC/PY"
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
         cellTemplate="actualVsPreviousYearAbsoluteDifferenceTemplate"
       >
@@ -201,18 +211,21 @@
 
       <dxi-column
         dataField="orderPieces"
+        [cssClass]="'myClass'"
         caption="Order Pieces"
         [visible]="true"
       ></dxi-column>
 
       <dxi-column
         dataField="salesPrice"
+        [cssClass]="'myClass'"
         caption="Sales Price"
         [visible]="true"
       ></dxi-column>
 
       <dxi-column
         dataField="actualOrderValue"
+        [cssClass]="'myClass'"
         caption="Actual Order Value"
         [visible]="true"
       ></dxi-column>
@@ -221,6 +234,7 @@
         dataField="actions"
         caption=""
         [allowEditing]="false"
+        [cssClass]="'myClass'"
         [allowFiltering]="false"
         cellTemplate="cellTemplate"
       >

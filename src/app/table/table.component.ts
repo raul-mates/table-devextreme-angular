@@ -17,7 +17,6 @@ export class TableComponent {
   customerId: string = '';
   faPencilAlt = faPencilAlt;
   faEllipsis = faEllipsis;
-  debouncedRejectReasonChange: Function;
 
   brandDataSource = [
     { id: 1, name: 'Street One' },
@@ -30,10 +29,6 @@ export class TableComponent {
     private mockDataService: MockDataService,
     public modalService: ModalService
   ) {
-    this.debouncedRejectReasonChange = this.debounce(
-      this.onRejectReasonChange,
-      800
-    );
     this.dataSource = this.mockDataService.getData().map((item: any) => {
       const actions = item.actions.map((action: ActionKeys, index: number) => ({
         id: index + 1,
@@ -103,22 +98,6 @@ export class TableComponent {
   onRejectReasonChange(event: Event, rowData: any): void {
     const inputElement = event.target as HTMLInputElement;
     rowData.rejectReason = inputElement.value;
-  }
-
-  debounce(
-    func: (...args: any[]) => void,
-    wait: number
-  ): (...args: any[]) => void {
-    let timeoutId: any;
-
-    return (...args: any[]) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        func.apply(this, args);
-      }, wait);
-    };
   }
 
   onDropDownItemClicked(event: any, rowData: any) {
