@@ -1,1 +1,9 @@
-<app-table></app-table>
+<dx-toolbar id="toolbar" style="margin-bottom: 21px">
+  <dxi-item
+    widget="dxButton"
+    [options]="buttonOptions"
+    location="after"
+  ></dxi-item>
+</dx-toolbar>
+
+<app-drawer [isOpen]="isDrawerOpen()"></app-drawer>

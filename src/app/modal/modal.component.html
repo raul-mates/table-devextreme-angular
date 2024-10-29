@@ -1,0 +1,43 @@
+<div class="modal-background" (click)="onModalBackgroundClicked($event)">
+  <div
+    class="modal-content"
+    [style.width]="modalService.modalForInsights() === false ? 'auto' : '47%'"
+  >
+    <div
+      class="modal-content__wrapper-reject-reason"
+      *ngIf="modalService.modalForInsights() === false"
+    >
+      <div class="modal-content__input-container">
+        <label
+          for="rejectReason"
+          class="modal-content__input-container__input-label"
+          >Reject Reason</label
+        >
+        <input
+          type="text"
+          id="rejectReason"
+          [value]="rowData.rejectReason"
+          class="modal-content__input-container__input"
+          [(ngModel)]="inputValue"
+        />
+      </div>
+      <div class="modal-content__buttons-container">
+        <button
+          (click)="modalService.closeModal(); onSaveClicked()"
+          class="modal-content__buttons-container--btn-save modal-content__buttons-container--btn"
+        >
+          Save
+        </button>
+        <button
+          (click)="modalService.closeModal()"
+          class="modal-content__buttons-container--btn-cancel modal-content__buttons-container--btn"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+    <div *ngIf="modalService.modalForInsights() === true">
+      <app-chart></app-chart>
+    </div>
+  </div>
+</div>

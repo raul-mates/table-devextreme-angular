@@ -3,6 +3,7 @@ import { MockDataService } from '../mockData/Table data';
 import { faPencilAlt, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
 import { ACTIONS } from '../mockData/Actions 1';
+import { ModalService } from '../modal.service';
 
 type ActionKeys = keyof typeof ACTIONS;
 
@@ -24,7 +25,10 @@ export class TableComponent {
     { id: 6, name: 'Street One Studio' },
   ];
 
-  constructor(private mockDataService: MockDataService) {
+  constructor(
+    private mockDataService: MockDataService,
+    public modalService: ModalService
+  ) {
     this.dataSource = this.mockDataService.getData().map((item: any) => {
       const actions = item.actions.map((action: ActionKeys, index: number) => ({
         id: index + 1,
@@ -34,6 +38,8 @@ export class TableComponent {
       }));
       return { ...item, actions };
     });
+
+    this.customizeTotalText = this.customizeTotalText.bind(this);
   }
 
   getCurrencySymbol(currency: string): string {
@@ -89,11 +95,37 @@ export class TableComponent {
     },
   ];
 
-  onIconClicked(data: any) {
-    console.log(data);
+  onRejectReasonChange(event: Event, rowData: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    rowData.rejectReason = inputElement.value;
   }
 
-  onItemClick(event: any) {
-    console.log(event.itemData.name);
+  onDropDownItemClicked(event: any, rowData: any) {
+    const clickedAction = event.itemData;
+    if (clickedAction.name === 'DELETE') {
+      this.deleteItem(rowData);
+    }
+
+    if (clickedAction.name === 'SUBMIT') {
+      rowData.orderStatus = 'SUBMITTED';
+    }
+
+    if (clickedAction.name === 'INSIGHTS') {
+      this.modalService.openModal(rowData);
+      this.modalService.modalForInsights.set(true);
+    }
+  }
+
+  deleteItem(rowData: any) {
+    const index = this.dataSource.indexOf(rowData);
+    if (index > -1) {
+      this.dataSource.splice(index, 1);
+    }
+  }
+
+  customizeTotalText(summaryInfo: any) {
+    return summaryInfo.value
+      ? `Total: ${summaryInfo.value.toFixed(2)}`
+      : 'Total: 0.00';
   }
 }
