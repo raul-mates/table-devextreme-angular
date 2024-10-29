@@ -21,6 +21,7 @@ import { OrderStatusComponent } from './order-status/order-status.component';
 import { ModalComponent } from './modal/modal.component';
 import { DrawerComponent } from './drawer/drawer.component';
 import { ChartComponent } from './chart/chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ChartComponent } from './chart/chart.component';
     ModalComponent,
     DrawerComponent,
     ChartComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,

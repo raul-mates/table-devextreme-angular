@@ -91,7 +91,10 @@
         cellTemplate="orderStatusTemplate"
       >
         <div *dxTemplate="let data of 'orderStatusTemplate'">
-          <app-order-status [data]="data.data"></app-order-status>
+          <app-order-status
+            [data]="data.data"
+            [fullData]="dataSource"
+          ></app-order-status>
         </div>
       </dxi-column>
 
@@ -114,10 +117,9 @@
             (blur)="onRejectReasonChange($event, data.data)"
           />
           <div class="reject-reason__icon-container">
-            <fa-icon
-              [icon]="faPencilAlt"
-              class="reject-reason__icon-container__edit-icon"
-            ></fa-icon>
+            <i
+              class="fas fa-pencil-alt reject-reason__icon-container__edit-icon"
+            ></i>
           </div>
         </div>
       </dxi-column>

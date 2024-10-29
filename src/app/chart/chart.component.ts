@@ -1,20 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+} from '@angular/core';
 import { MockDataService } from '../mockData/Table data';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrl: './chart.component.scss',
+  styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
+  @Input() data: any[] = [];
   ordersData: any;
   chartData: any;
 
   constructor(public mockDataService: MockDataService) {}
 
   ngOnInit(): void {
-    this.ordersData = this.mockDataService
-      .getData()
+    this.updateChartData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && !changes['data'].firstChange) {
+      this.updateChartData();
+    }
+  }
+
+  updateChartData(): void {
+    this.ordersData = this.data
       .filter((order: any) => order.orderId && order.orderPieces)
       .map((order: any) => ({
         orderId: order.orderId,

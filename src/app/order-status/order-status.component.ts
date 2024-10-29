@@ -7,9 +7,13 @@ import { ModalService } from '../modal.service';
   styleUrls: ['./order-status.component.scss'],
 })
 export class OrderStatusComponent {
+  @Input() fullData: any;
   @Input() data!: any;
   @Input() rejectReason: string = '';
   @Input() rowData!: any;
+
+  orderStatusReopened: string = 'REOPENED';
+  orderStatusSubmitted: string = 'SUBMITTED';
 
   constructor(public modalService: ModalService) {}
 

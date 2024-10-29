@@ -7,4 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class DrawerComponent {
   @Input() isOpen: boolean = false;
+
+  chartData: any[] = [];
+
+  handleDataSourceChanged(data: any[]) {
+    this.chartData = data;
+  }
 }

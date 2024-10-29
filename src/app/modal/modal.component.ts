@@ -9,9 +9,8 @@ import { MockDataService } from '../mockData/Table data';
 })
 export class ModalComponent implements OnInit {
   @Input() rowData: any;
+  @Input() arrayData: any;
   inputValue: string = '';
-  ordersData: any;
-  chartData: any;
 
   constructor(
     public modalService: ModalService,
@@ -22,15 +21,6 @@ export class ModalComponent implements OnInit {
     if (this.rowData && this.rowData.rejectReason) {
       this.inputValue = this.rowData.rejectReason;
     }
-
-    this.ordersData = this.mockDataService
-      .getData()
-      .filter((order: any) => order.orderId && order.orderPieces)
-      .map((order: any) => ({
-        orderId: order.orderId,
-        orderPieces: order.orderPieces,
-        customerName: order.customerName,
-      }));
   }
 
   onSaveClicked() {

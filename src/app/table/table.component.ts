@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MockDataService } from '../mockData/Table data';
-import { faPencilAlt, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
 import { ACTIONS } from '../mockData/Actions 1';
 import { ModalService } from '../modal.service';
@@ -12,11 +11,10 @@ type ActionKeys = keyof typeof ACTIONS;
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   dataSource: any;
   customerId: string = '';
-  faPencilAlt = faPencilAlt;
-  faEllipsis = faEllipsis;
+  @Output() dataSourceChanged = new EventEmitter<any[]>();
 
   brandDataSource = [
     { id: 1, name: 'Street One' },
@@ -40,6 +38,42 @@ export class TableComponent {
     });
 
     this.customizeTotalText = this.customizeTotalText.bind(this);
+  }
+
+  ngOnInit(): void {
+    this.emitDataSourceChanges();
+  }
+
+  emitDataSourceChanges() {
+    this.dataSourceChanged.emit(this.dataSource);
+  }
+
+  deleteItem(rowData: any) {
+    const index = this.dataSource.indexOf(rowData);
+    if (index > -1) {
+      this.dataSource.splice(index, 1);
+      this.dataSource = [...this.dataSource];
+      this.emitDataSourceChanges();
+    }
+    console.log(this.dataSource);
+  }
+
+  onDropDownItemClicked(event: any, rowData: any) {
+    const clickedAction = event.itemData;
+
+    if (clickedAction.name === 'DELETE') {
+      this.deleteItem(rowData);
+    }
+
+    if (clickedAction.name === 'SUBMIT') {
+      rowData.orderStatus = 'SUBMITTED';
+      this.emitDataSourceChanges();
+    }
+
+    if (clickedAction.name === 'INSIGHTS') {
+      this.modalService.openModal(rowData);
+      this.modalService.modalForInsights.set(true);
+    }
   }
 
   getCurrencySymbol(currency: string): string {
@@ -98,29 +132,6 @@ export class TableComponent {
   onRejectReasonChange(event: Event, rowData: any): void {
     const inputElement = event.target as HTMLInputElement;
     rowData.rejectReason = inputElement.value;
-  }
-
-  onDropDownItemClicked(event: any, rowData: any) {
-    const clickedAction = event.itemData;
-    if (clickedAction.name === 'DELETE') {
-      this.deleteItem(rowData);
-    }
-
-    if (clickedAction.name === 'SUBMIT') {
-      rowData.orderStatus = 'SUBMITTED';
-    }
-
-    if (clickedAction.name === 'INSIGHTS') {
-      this.modalService.openModal(rowData);
-      this.modalService.modalForInsights.set(true);
-    }
-  }
-
-  deleteItem(rowData: any) {
-    const index = this.dataSource.indexOf(rowData);
-    if (index > -1) {
-      this.dataSource.splice(index, 1);
-    }
   }
 
   customizeTotalText(summaryInfo: any) {
