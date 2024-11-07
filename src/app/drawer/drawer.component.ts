@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TableDataInterface } from '../shared/interfaces';
 
 @Component({
   selector: 'app-drawer',
@@ -8,9 +9,9 @@ import { Component, Input } from '@angular/core';
 export class DrawerComponent {
   @Input() isOpen: boolean = false;
 
-  chartData: any[] = [];
+  chartData: TableDataInterface[] = [];
 
-  handleDataSourceChanged(data: any[]) {
+  handleDataSourceChanged(data: TableDataInterface[]) {
     this.chartData = data;
   }
 }

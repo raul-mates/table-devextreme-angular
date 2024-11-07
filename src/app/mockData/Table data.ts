@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ACTIONS } from './Actions 1';
 
 const mockData = [
   {
@@ -2163,11 +2164,21 @@ const mockData = [
   },
 ];
 
+type ActionKeys = keyof typeof ACTIONS;
+
 @Injectable({
   providedIn: 'root',
 })
 export class MockDataService {
   getData() {
-    return mockData;
+    return mockData.map((item: any) => {
+      const actions = item.actions.map((action: ActionKeys, index: number) => ({
+        id: index + 1,
+        name: ACTIONS[action]?.value || action,
+        label: ACTIONS[action]?.label,
+        icon: ACTIONS[action]?.icon || '',
+      }));
+      return { ...item, actions };
+    });
   }
 }

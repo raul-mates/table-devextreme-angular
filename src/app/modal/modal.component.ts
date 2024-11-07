@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { MockDataService } from '../mockData/Table data';
+import { TableDataInterface } from '../shared/interfaces';
 
 @Component({
   selector: 'app-modal',
@@ -8,8 +9,8 @@ import { MockDataService } from '../mockData/Table data';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent implements OnInit {
-  @Input() rowData: any;
-  @Input() arrayData: any;
+  @Input() rowData!: TableDataInterface;
+  @Input() arrayData!: TableDataInterface[];
   inputValue: string = '';
 
   constructor(
@@ -27,8 +28,11 @@ export class ModalComponent implements OnInit {
     this.rowData.rejectReason = this.inputValue;
   }
 
-  onModalBackgroundClicked(e: any) {
-    if (e.target.classList.contains('modal-background'))
+  onModalBackgroundClicked(e: MouseEvent) {
+    if (
+      e.target instanceof HTMLElement &&
+      e.target.classList.contains('modal-background')
+    )
       this.modalService.closeModal();
   }
 }

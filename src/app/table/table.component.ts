@@ -1,10 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MockDataService } from '../mockData/Table data';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
-import { ACTIONS } from '../mockData/Actions 1';
 import { ModalService } from '../modal.service';
-
-type ActionKeys = keyof typeof ACTIONS;
+import { ALL_STATUS } from '../shared/all-status';
+import { ACTIONS } from '../mockData/Actions 1';
+import { TableDataInterface, SummaryInfo } from '../shared/interfaces';
+import { ItemClickEvent } from 'devextreme/ui/drop_down_button';
 
 @Component({
   selector: 'app-table',
@@ -12,9 +13,9 @@ type ActionKeys = keyof typeof ACTIONS;
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  dataSource: any;
+  dataSource: TableDataInterface[];
   customerId: string = '';
-  @Output() dataSourceChanged = new EventEmitter<any[]>();
+  @Output() dataSourceChanged = new EventEmitter<TableDataInterface[]>();
 
   brandDataSource = [
     { id: 1, name: 'Street One' },
@@ -27,50 +28,37 @@ export class TableComponent implements OnInit {
     private mockDataService: MockDataService,
     public modalService: ModalService
   ) {
-    this.dataSource = this.mockDataService.getData().map((item: any) => {
-      const actions = item.actions.map((action: ActionKeys, index: number) => ({
-        id: index + 1,
-        name: ACTIONS[action]?.value || action,
-        label: ACTIONS[action]?.label,
-        icon: ACTIONS[action]?.icon || '',
-      }));
-      return { ...item, actions };
-    });
-
-    this.customizeTotalText = this.customizeTotalText.bind(this);
-  }
-
-  ngOnInit(): void {
-    this.emitDataSourceChanges();
-  }
-
-  emitDataSourceChanges() {
+    this.dataSource = this.mockDataService.getData();
     this.dataSourceChanged.emit(this.dataSource);
   }
 
-  deleteItem(rowData: any) {
+  ngOnInit(): void {
+    this.dataSourceChanged.emit(this.dataSource);
+  }
+
+  deleteItem(rowData: TableDataInterface) {
     const index = this.dataSource.indexOf(rowData);
     if (index > -1) {
       this.dataSource.splice(index, 1);
       this.dataSource = [...this.dataSource];
-      this.emitDataSourceChanges();
+      this.dataSourceChanged.emit(this.dataSource);
     }
-    console.log(this.dataSource);
   }
 
-  onDropDownItemClicked(event: any, rowData: any) {
+  onDropDownItemClicked(event: ItemClickEvent, rowData: TableDataInterface) {
     const clickedAction = event.itemData;
 
-    if (clickedAction.name === 'DELETE') {
+    if (clickedAction.name === ACTIONS['DELETE'].value) {
       this.deleteItem(rowData);
     }
 
-    if (clickedAction.name === 'SUBMIT') {
-      rowData.orderStatus = 'SUBMITTED';
-      this.emitDataSourceChanges();
+    if (clickedAction.name === ACTIONS['SUBMIT'].value) {
+      rowData.orderStatus = ALL_STATUS['SUBMITTED'].value;
+      this.dataSource = [...this.dataSource];
+      this.dataSourceChanged.emit(this.dataSource);
     }
 
-    if (clickedAction.name === 'INSIGHTS') {
+    if (clickedAction.name === ACTIONS['INSIGHTS'].value) {
       this.modalService.openModal(rowData);
       this.modalService.modalForInsights.set(true);
     }
@@ -97,19 +85,6 @@ export class TableComponent implements OnInit {
     return brandMap[brandId] || 'Unknown Brand';
   }
 
-  getOrderStatusLabel(orderStatus: string): string {
-    const orderStatusMap: { [key: string]: string } = {
-      APPROVED: 'Received ERP',
-      REOPENED: 'Reopened',
-      NOT_CREATED_YET: 'Not created',
-      SUBMITTED: 'Submitted',
-      REJECTED: 'Rejected',
-      OPEN: 'Open',
-    };
-
-    return orderStatusMap[orderStatus] || 'Unknown Brand';
-  }
-
   brandHeaderFilter: DxoHeaderFilterComponent['dataSource'] = [
     {
       text: 'Street One',
@@ -129,14 +104,22 @@ export class TableComponent implements OnInit {
     },
   ];
 
-  onRejectReasonChange(event: Event, rowData: any): void {
+  onRejectReasonChange(event: Event, rowData: TableDataInterface): void {
     const inputElement = event.target as HTMLInputElement;
     rowData.rejectReason = inputElement.value;
   }
 
-  customizeTotalText(summaryInfo: any) {
+  customizeTotalText(summaryInfo: SummaryInfo) {
     return summaryInfo.value
       ? `Total: ${summaryInfo.value.toFixed(2)}`
       : 'Total: 0.00';
+  }
+
+  handleStatusChanged(updatedRowData: TableDataInterface) {
+    this.dataSource = this.dataSource.map((item: TableDataInterface) =>
+      item.orderId === updatedRowData.orderId ? { ...updatedRowData } : item
+    );
+
+    this.dataSourceChanged.emit(this.dataSource);
   }
 }

@@ -1,8 +1,9 @@
 <dx-pie-chart
   [dataSource]="pieChartData"
   type="doughnut"
-  palette="Bright"
+  palette="statusColors"
   title="Order Distribution by Status"
+  [customizePoint]="customizePoint"
 >
   <dxo-tooltip
     [enabled]="true"

@@ -2,13 +2,13 @@
   template="template"
   [(opened)]="isOpen"
   [revealMode]="'slide'"
-  [closeOnOutsideClick]="true"
-  [openedStateMode]="'push'"
+  [closeOnOutsideClick]="false"
+  [openedStateMode]="'shrink'"
   [position]="'right'"
 >
   <div
     *dxTemplate="let data of 'template'"
-    style="width: 33vw; margin-left: 5px"
+    style="width: 33vw; margin-left: 5px; overflow-x: hidden"
   >
     <app-chart [data]="chartData"></app-chart>
     <app-pie-chart [data]="chartData"></app-pie-chart>

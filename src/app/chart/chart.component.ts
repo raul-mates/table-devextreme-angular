@@ -1,47 +1,42 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnInit,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MockDataService } from '../mockData/Table data';
+import {
+  TableDataInterface,
+  ChartData,
+  OrderSummary,
+} from '../shared/interfaces';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit, OnChanges {
-  @Input() data: any[] = [];
-  ordersData: any;
-  chartData: any;
+export class ChartComponent {
+  private _data: TableDataInterface[] = [];
+  ordersData: OrderSummary[] = [];
+  chartData: ChartData[] = [];
 
-  constructor(public mockDataService: MockDataService) {}
-
-  ngOnInit(): void {
+  @Input()
+  set data(value: TableDataInterface[]) {
+    this._data = value;
     this.updateChartData();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && !changes['data'].firstChange) {
-      this.updateChartData();
-    }
-  }
+  constructor(public mockDataService: MockDataService) {}
 
   updateChartData(): void {
-    this.ordersData = this.data
-      .filter((order: any) => order.orderId && order.orderPieces)
-      .map((order: any) => ({
+    this.ordersData = this._data
+      .filter((order: TableDataInterface) => order.orderId && order.orderPieces)
+      .map((order: TableDataInterface) => ({
         orderId: order.orderId,
         orderPieces: order.orderPieces,
         customerName: order.customerName,
-      }));
+      })) as OrderSummary[];
 
     this.chartData = this.getChartData();
   }
 
-  getChartData() {
+  getChartData(): ChartData[] {
     return [
       {
         range: '<50',
@@ -71,23 +66,28 @@ export class ChartComponent implements OnInit, OnChanges {
     ];
   }
 
-  getOrdersInRange(min: number, max: number) {
+  getOrdersInRange(min: number, max: number): OrderSummary[] {
     return this.ordersData
       .filter(
-        (order: any) => order.orderPieces >= min && order.orderPieces < max
+        (order: OrderSummary) =>
+          order.orderPieces >= min && order.orderPieces < max
       )
-      .map((order: any) => ({
+      .map((order: OrderSummary) => ({
         orderId: order.orderId,
         customerName: order.customerName,
+        orderPieces: order.orderPieces,
       }));
   }
 
-  customTooltip = (info: any) => {
+  customTooltip = (info: {
+    argumentText: string;
+    point: { data: { orders: OrderSummary[] } };
+  }) => {
     const range = info.argumentText;
     const orders = info.point.data.orders;
 
     let orderList = '<ul>';
-    orders.forEach((order: any) => {
+    orders.forEach((order: OrderSummary) => {
       orderList += `<li>${order.orderId} - ${order.customerName}</li>`;
     });
     orderList += '</ul>';

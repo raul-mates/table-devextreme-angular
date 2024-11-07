@@ -1,44 +1,48 @@
+import { Component, Input } from '@angular/core';
 import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnInit,
-} from '@angular/core';
+  TableDataInterface,
+  PieChartDataInterface,
+  TooltipInfo,
+} from '../shared/interfaces';
 
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
 })
-export class PieChartComponent implements OnInit, OnChanges {
-  @Input() data: any[] = [];
-  pieChartData: any[] = [];
+export class PieChartComponent {
+  private _data: TableDataInterface[] = [];
+  pieChartData: PieChartDataInterface[] = [];
 
-  ngOnInit(): void {
+  statusColorMap: { [key: string]: string } = {
+    APPROVED: '#36d298',
+    SUBMITTED: '#ffb84d',
+    REJECTED: '#ff6666',
+    NOT_CREATED_YET: '#c0c0c0',
+    REOPENED: '#ff6b9b',
+    OPEN: '#42c6ff',
+  };
+
+  @Input()
+  set data(value: TableDataInterface[]) {
+    this._data = value;
     this.updatePieChartData();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && !changes['data'].firstChange) {
-      this.updatePieChartData();
-    }
   }
 
   updatePieChartData(): void {
     const statusMap = new Map<
       string,
-      { totalValue: number; salesPrice: number; orders: any[] }
+      { totalValue: number; salesPrice: number; orders: TableDataInterface[] }
     >();
 
-    this.data.forEach((order) => {
+    this._data.forEach((order) => {
       const status = order.orderStatus;
       if (!statusMap.has(status)) {
         statusMap.set(status, { totalValue: 0, salesPrice: 0, orders: [] });
       }
       const statusData = statusMap.get(status)!;
 
-      statusData.totalValue += order.orderValueBudgetRelevant;
+      statusData.totalValue += order.orderValueBudgetRelevant ?? 0;
       statusData.salesPrice += order.salesPrice;
 
       statusData.orders.push(order);
@@ -55,7 +59,7 @@ export class PieChartComponent implements OnInit, OnChanges {
     );
   }
 
-  customizeTooltip = (info: any) => {
+  customizeTooltip = (info: TooltipInfo) => {
     const status = info.argumentText;
     const data = this.pieChartData.find((d) => d.status === status);
 
@@ -74,7 +78,7 @@ export class PieChartComponent implements OnInit, OnChanges {
     }).format(data.salesPrice);
 
     let orderList = `<ul>`;
-    data.orders.forEach((order: any) => {
+    data.orders.forEach((order: TableDataInterface) => {
       const orderId = order.orderId ? order.orderId : 'N/A';
       orderList += `<li>${orderId} - ${order.customerName}</li>`;
     });
@@ -89,5 +93,10 @@ export class PieChartComponent implements OnInit, OnChanges {
               ${orderList}
             </div>`,
     };
+  };
+
+  customizePoint = (pointInfo: { argument: string }) => {
+    const color = this.statusColorMap[pointInfo.argument] || '#cccccc';
+    return { color };
   };
 }

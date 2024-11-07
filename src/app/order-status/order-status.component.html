@@ -6,10 +6,10 @@
 >
   {{ getOrderStatusLabel(data.orderStatus) }}
   <i
-    *ngIf="data.orderStatus === orderStatusReopened"
+    *ngIf="data.orderStatus === ALL_STATUS['REOPENED'].value"
     class="fa-regular fa-message"
   ></i>
-  <div *ngIf="data.orderStatus === orderStatusSubmitted">
+  <div *ngIf="data.orderStatus === ALL_STATUS['SUBMITTED'].value">
     <i
       #approveIcon
       class="fa-solid fa-thumbs-up icon-approve"
