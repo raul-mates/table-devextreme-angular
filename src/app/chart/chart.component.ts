@@ -37,33 +37,22 @@ export class ChartComponent {
   }
 
   getChartData(): ChartData[] {
-    return [
-      {
-        range: '<50',
-        ordersCount: this.getOrdersInRange(0, 50).length,
-        orders: this.getOrdersInRange(0, 50),
-      },
-      {
-        range: '50 - 100',
-        ordersCount: this.getOrdersInRange(50, 100).length,
-        orders: this.getOrdersInRange(50, 100),
-      },
-      {
-        range: '100 - 200',
-        ordersCount: this.getOrdersInRange(100, 200).length,
-        orders: this.getOrdersInRange(100, 200),
-      },
-      {
-        range: '200 - 300',
-        ordersCount: this.getOrdersInRange(200, 300).length,
-        orders: this.getOrdersInRange(200, 300),
-      },
-      {
-        range: '>300',
-        ordersCount: this.getOrdersInRange(300, Infinity).length,
-        orders: this.getOrdersInRange(300, Infinity),
-      },
+    const ranges = [
+      { label: '<50', min: 0, max: 50 },
+      { label: '50 - 100', min: 50, max: 100 },
+      { label: '100 - 200', min: 100, max: 200 },
+      { label: '200 - 300', min: 200, max: 300 },
+      { label: '>300', min: 300, max: Infinity },
     ];
+
+    return ranges.map((range) => {
+      const ordersInRange = this.getOrdersInRange(range.min, range.max);
+      return {
+        range: range.label,
+        ordersCount: ordersInRange.length,
+        orders: ordersInRange,
+      };
+    });
   }
 
   getOrdersInRange(min: number, max: number): OrderSummary[] {

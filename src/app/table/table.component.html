@@ -23,6 +23,8 @@
         cellTemplate="brandTemplate"
         [cssClass]="'myClass'"
         [allowEditing]="false"
+        [fixed]="true"
+        [fixedPosition]="'left'"
         [allowFiltering]="true"
         headerFilter="{
       dataSource: brandDataSource
@@ -39,6 +41,9 @@
         caption="Customer Number"
         [cssClass]="'myClass'"
         [allowEditing]="false"
+        [fixed]="true"
+        [width]="'67.5px'"
+        [fixedPosition]="'left'"
         [allowFiltering]="false"
       ></dxi-column>
 
@@ -82,6 +87,7 @@
         dataField="city"
         caption="City"
         [allowEditing]="false"
+        [width]="'95px'"
         [cssClass]="'myClass'"
         [allowFiltering]="false"
       ></dxi-column>
@@ -90,6 +96,7 @@
         dataField="orderStatus"
         caption="Order Status"
         [allowFiltering]="true"
+        [width]="'150px'"
         [cssClass]="'myClass'"
         cellTemplate="orderStatusTemplate"
       >
@@ -241,6 +248,8 @@
         caption=""
         [allowEditing]="false"
         [cssClass]="'myClass'"
+        [fixed]="true"
+        [fixedPosition]="'right'"
         [allowFiltering]="false"
         cellTemplate="cellTemplate"
       >
