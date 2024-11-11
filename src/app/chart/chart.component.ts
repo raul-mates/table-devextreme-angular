@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { MockDataService } from '../mockData/Table data';
 import {
   TableDataInterface,
   ChartData,
@@ -21,8 +20,6 @@ export class ChartComponent {
     this._data = value;
     this.updateChartData();
   }
-
-  constructor(public mockDataService: MockDataService) {}
 
   updateChartData(): void {
     this.ordersData = this._data

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MockDataService } from '../mockData/Table data';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
 import { ModalService } from '../modal.service';
 import { ALL_STATUS } from '../shared/all-status';
@@ -12,29 +11,11 @@ import { ItemClickEvent } from 'devextreme/ui/drop_down_button';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
-  dataSource: TableDataInterface[];
-  customerId: string = '';
+export class TableComponent {
+  @Input() dataSource!: TableDataInterface[];
   @Output() dataSourceChanged = new EventEmitter<TableDataInterface[]>();
 
-  brandDataSource = [
-    { id: 1, name: 'Street One' },
-    { id: 2, name: 'Cecil' },
-    { id: 4, name: 'Street One Men' },
-    { id: 6, name: 'Street One Studio' },
-  ];
-
-  constructor(
-    private mockDataService: MockDataService,
-    public modalService: ModalService
-  ) {
-    this.dataSource = this.mockDataService.getData();
-    this.dataSourceChanged.emit(this.dataSource);
-  }
-
-  ngOnInit(): void {
-    this.dataSourceChanged.emit(this.dataSource);
-  }
+  constructor(public modalService: ModalService) {}
 
   deleteItem(rowData: TableDataInterface) {
     const index = this.dataSource.indexOf(rowData);

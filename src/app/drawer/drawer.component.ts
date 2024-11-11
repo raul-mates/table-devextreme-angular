@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TableDataInterface } from '../shared/interfaces';
+import { MockDataService } from '../mockData/Table data';
 
 @Component({
   selector: 'app-drawer',
@@ -7,11 +8,15 @@ import { TableDataInterface } from '../shared/interfaces';
   styleUrl: './drawer.component.scss',
 })
 export class DrawerComponent {
+  dataSource!: TableDataInterface[];
+
   @Input() isOpen: boolean = false;
 
-  chartData: TableDataInterface[] = [];
+  constructor(public mockDataService: MockDataService) {
+    this.dataSource = this.mockDataService.getData();
+  }
 
   handleDataSourceChanged(data: TableDataInterface[]) {
-    this.chartData = data;
+    this.dataSource = data;
   }
 }

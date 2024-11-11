@@ -10,8 +10,11 @@
     *dxTemplate="let data of 'template'"
     style="width: 33vw; margin-left: 5px; overflow-x: hidden"
   >
-    <app-chart [data]="chartData"></app-chart>
-    <app-pie-chart [data]="chartData"></app-pie-chart>
+    <app-chart [data]="dataSource"></app-chart>
+    <app-pie-chart [data]="dataSource"></app-pie-chart>
   </div>
-  <app-table (dataSourceChanged)="handleDataSourceChanged($event)"></app-table>
+  <app-table
+    (dataSourceChanged)="handleDataSourceChanged($event)"
+    [dataSource]="dataSource"
+  ></app-table>
 </dx-drawer>
