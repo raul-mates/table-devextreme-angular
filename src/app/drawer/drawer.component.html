@@ -1,6 +1,6 @@
 <dx-drawer
   template="template"
-  [(opened)]="isOpen"
+  [opened]="drawerService.isDrawerOpen()"
   [revealMode]="'slide'"
   [closeOnOutsideClick]="false"
   [openedStateMode]="'shrink'"

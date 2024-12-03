@@ -1,9 +1,39 @@
-<dx-toolbar id="toolbar" style="margin-bottom: 21px">
-  <dxi-item
-    widget="dxButton"
-    [options]="buttonOptions"
-    location="after"
-  ></dxi-item>
-</dx-toolbar>
+<div
+  class="main-container"
+  [ngStyle]="
+    router.url === '/table'
+      ? {
+          'background-color': '#fff',
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100vw',
+          height: '100vh'
+        }
+      : {
+          'background-color': '#fff'
+        }
+  "
+>
+  <div
+    *ngIf="router.url === '/table'"
+    style="margin: 25px 20px 25px 0"
+    class="toolbar-container"
+  >
+    <dx-toolbar id="toolbar" style="margin-bottom: 21px">
+      <dxi-item
+        widget="dxButton"
+        [options]="buttonOptions"
+        location="after"
+      ></dxi-item>
+    </dx-toolbar>
+  </div>
 
-<app-drawer [isOpen]="isDrawerOpen()"></app-drawer>
+  <router-outlet></router-outlet>
+
+  <app-modal
+    *ngIf="modalService.showModal()"
+    [rowData]="modalService.getRowData()"
+    [arrayData]="fullData"
+  ></app-modal>
+</div>

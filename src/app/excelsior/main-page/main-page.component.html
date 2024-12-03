@@ -1,0 +1,21 @@
+<div class="main-body">
+  <div class="dropdowns-container">
+    <dx-select-box
+      [dataSource]="environments"
+      [displayExpr]="formatEnvDisplay"
+      [value]="selectedEnvironment"
+    />
+
+    <dx-select-box
+      [dataSource]="serviceLabels"
+      [(value)]="selectedService"
+      displayExpr="label"
+      keyExpr="id"
+      (onValueChanged)="onServiceSelectionChange()"
+      [style.width]="'330px'"
+    />
+  </div>
+  <div class="card-container">
+    <app-card [operations]="selectedOperations"></app-card>
+  </div>
+</div>

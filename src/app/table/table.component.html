@@ -100,7 +100,6 @@
         <div *dxTemplate="let data of 'orderStatusTemplate'">
           <app-order-status
             [data]="data.data"
-            [fullData]="dataSource"
             (statusChanged)="handleStatusChanged($event)"
           ></app-order-status>
         </div>

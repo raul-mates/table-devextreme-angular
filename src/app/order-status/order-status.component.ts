@@ -9,7 +9,6 @@ import { TableDataInterface } from '../shared/interfaces';
   styleUrls: ['./order-status.component.scss'],
 })
 export class OrderStatusComponent {
-  @Input() fullData: TableDataInterface[] = [];
   @Input() data!: TableDataInterface;
   @Input() rejectReason: string = '';
   @Input() rowData!: TableDataInterface;

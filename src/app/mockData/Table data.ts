@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ACTIONS } from './Actions 1';
+import { TableDataInterface } from '../shared/interfaces';
 
-const mockData = [
+const mockData: TableDataInterface[] = [
   {
     customerNumber: '603840',
     customerId: 847121214,

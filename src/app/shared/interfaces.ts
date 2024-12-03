@@ -24,21 +24,21 @@ export interface TableDataInterface {
   country: string;
   street: string;
   zipCode: string;
-  lastModifiedAt: Date;
+  lastModifiedAt: Date | string | null;
   lastModifiedBy: string | null;
   orderPiecesPreviousYear: number | null;
   orderValuePreviousYear: number;
   orderValueBudgetRelevant: number | null;
   orderValueOnTop: number | null;
-  actualVsPreviousYearPercentage: number;
-  actualVsPreviousYearAbsoluteDifference: number;
+  actualVsPreviousYearPercentage: number | null;
+  actualVsPreviousYearAbsoluteDifference: number | null;
   menuSharePercentage: number | null;
   colorSharePercentage: number | null;
   designDepartmentSharePercentage: number | null;
   qrShare: number | null;
   qrSharePercentage: number | null;
   rejectReason: string | null;
-  campaignId: string | null;
+  campaignId: string | null | number;
   actions: Array<keyof typeof ACTIONS>;
   containsCancelledItems: boolean;
   recommendationId: string | null;
@@ -80,4 +80,9 @@ export interface Action {
   value: string;
   label: string;
   icon: string;
+}
+
+export interface Environment {
+  name: string;
+  IP: string;
 }

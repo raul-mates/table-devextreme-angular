@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { ModalComponent } from './modal/modal.component';
 import { DrawerComponent } from './drawer/drawer.component';
 import { ChartComponent } from './chart/chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { MainPageComponent } from './excelsior/main-page/main-page.component';
+import { CardComponent } from './excelsior/card/card.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     DrawerComponent,
     ChartComponent,
     PieChartComponent,
+    MainPageComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +52,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     DxChartModule,
     DxDrawerModule,
     DxToolbarModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

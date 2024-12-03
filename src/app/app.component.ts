@@ -1,5 +1,9 @@
-import { Component, signal } from '@angular/core';
-import { DxoButtonOptionsModule } from 'devextreme-angular/ui/nested';
+import { Component } from '@angular/core';
+import { DrawerService } from './drawer/drawer.service';
+import { TableDataInterface } from './shared/interfaces';
+import { MockDataService } from './mockData/Table data';
+import { ModalService } from './modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +12,21 @@ import { DxoButtonOptionsModule } from 'devextreme-angular/ui/nested';
 })
 export class AppComponent {
   title = 'table-project';
-  isDrawerOpen = signal(false);
-  buttonOptions: DxoButtonOptionsModule = {
+  fullData: TableDataInterface[] = [];
+
+  buttonOptions = {
     icon: 'menu',
     onClick: () => {
-      this.isDrawerOpen.set(!this.isDrawerOpen());
+      this.drawerService.toggleDrawer();
     },
   };
+
+  constructor(
+    public drawerService: DrawerService,
+    public mockDataService: MockDataService,
+    public modalService: ModalService,
+    public router: Router
+  ) {
+    this.fullData = this.drawerService.getTableData();
+  }
 }
