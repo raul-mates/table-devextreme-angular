@@ -1,3 +1,12 @@
+<div class="toolbar-container">
+  <dx-toolbar id="toolbar" style="margin-bottom: 21px">
+    <dxi-item
+      widget="dxButton"
+      [options]="buttonOptions"
+      location="after"
+    ></dxi-item>
+  </dx-toolbar>
+</div>
 <dx-drawer
   template="template"
   [opened]="drawerService.isDrawerOpen()"
@@ -8,7 +17,12 @@
 >
   <div
     *dxTemplate="let data of 'template'"
-    style="width: 33vw; margin-left: 5px; overflow-x: hidden"
+    style="
+      width: 33vw;
+      margin-left: 5px;
+      overflow-x: hidden;
+      align-content: center;
+    "
   >
     <app-chart [data]="dataSource"></app-chart>
     <app-pie-chart [data]="dataSource"></app-pie-chart>

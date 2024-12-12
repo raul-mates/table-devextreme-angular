@@ -25,6 +25,7 @@ import { ChartComponent } from './chart/chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { MainPageComponent } from './excelsior/main-page/main-page.component';
 import { CardComponent } from './excelsior/card/card.component';
+import { DialogComponent } from './excelsior/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CardComponent } from './excelsior/card/card.component';
     PieChartComponent,
     MainPageComponent,
     CardComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,

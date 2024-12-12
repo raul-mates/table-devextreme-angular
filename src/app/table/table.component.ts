@@ -5,6 +5,7 @@ import { ALL_STATUS } from '../shared/all-status';
 import { ACTIONS } from '../mockData/Actions 1';
 import { TableDataInterface, SummaryInfo } from '../shared/interfaces';
 import { ItemClickEvent } from 'devextreme/ui/drop_down_button';
+import { DrawerService } from '../drawer/drawer.service';
 
 @Component({
   selector: 'app-table',
@@ -15,7 +16,10 @@ export class TableComponent {
   @Input() dataSource!: TableDataInterface[];
   @Output() dataSourceChanged = new EventEmitter<TableDataInterface[]>();
 
-  constructor(public modalService: ModalService) {}
+  constructor(
+    private modalService: ModalService,
+    private drawerService: DrawerService
+  ) {}
 
   deleteItem(rowData: TableDataInterface) {
     const index = this.dataSource.indexOf(rowData);

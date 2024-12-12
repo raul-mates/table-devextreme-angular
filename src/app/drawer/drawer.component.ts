@@ -9,15 +9,24 @@ import { DrawerService } from './drawer.service';
   styleUrl: './drawer.component.scss',
 })
 export class DrawerComponent {
-  dataSource!: TableDataInterface[];
+  dataSource!: any;
 
   @Input() isOpen: boolean = false;
+
+  buttonOptions = {
+    icon: 'menu',
+    onClick: () => {
+      this.drawerService.toggleDrawer();
+    },
+  };
 
   constructor(
     public mockDataService: MockDataService,
     public drawerService: DrawerService
   ) {
-    this.dataSource = this.drawerService.getTableData();
+    this.drawerService.getTableData().subscribe((response) => {
+      this.dataSource = response;
+    });
   }
 
   handleDataSourceChanged(data: TableDataInterface[]) {

@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { MockDataService } from '../mockData/Table data';
 import { TableDataInterface } from '../shared/interfaces';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class DrawerService {
   }
 
   getTableData() {
-    return this.fullData;
+    return of(this.fullData);
   }
 
   toggleDrawer() {

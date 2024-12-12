@@ -27,6 +27,8 @@ export class AppComponent {
     public modalService: ModalService,
     public router: Router
   ) {
-    this.fullData = this.drawerService.getTableData();
+    this.drawerService.getTableData().subscribe((response) => {
+      this.fullData = response;
+    });
   }
 }
