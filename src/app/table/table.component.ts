@@ -16,10 +16,7 @@ export class TableComponent {
   @Input() dataSource!: TableDataInterface[];
   @Output() dataSourceChanged = new EventEmitter<TableDataInterface[]>();
 
-  constructor(
-    private modalService: ModalService,
-    private drawerService: DrawerService
-  ) {}
+  constructor(private modalService: ModalService) {}
 
   deleteItem(rowData: TableDataInterface) {
     const index = this.dataSource.indexOf(rowData);

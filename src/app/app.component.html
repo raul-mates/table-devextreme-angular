@@ -2,20 +2,6 @@
   class="main-container"
   [ngClass]="router.url === '/table' ? 'table-view' : ''"
 >
-  <!-- <div
-    *ngIf="router.url === '/table'"
-    style="margin: 25px 20px 25px 0"
-    class="toolbar-container"
-  >
-    <dx-toolbar id="toolbar" style="margin-bottom: 21px">
-      <dxi-item
-        widget="dxButton"
-        [options]="buttonOptions"
-        location="after"
-      ></dxi-item>
-    </dx-toolbar>
-  </div> -->
-
   <router-outlet></router-outlet>
 
   <app-modal
