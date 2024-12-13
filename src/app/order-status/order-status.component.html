@@ -2,12 +2,14 @@
   class="order-status-filter-item order-status-{{
     data.orderStatus.toLowerCase()
   }}"
-  style="display: flex; align-items: center; justify-content: center; gap: 5px"
   (click)="handleReopenClicked(data.orderStatus, data)"
 >
   {{ getOrderStatusLabel(data.orderStatus) }}
-  <i *ngIf="data.orderStatus === 'REOPENED'" class="fa-regular fa-message"></i>
-  <div *ngIf="data.orderStatus === 'SUBMITTED'">
+  <i
+    *ngIf="data.orderStatus === ALL_STATUS['REOPENED'].value"
+    class="fa-regular fa-message"
+  ></i>
+  <div *ngIf="data.orderStatus === ALL_STATUS['SUBMITTED'].value">
     <i
       #approveIcon
       class="fa-solid fa-thumbs-up icon-approve"
@@ -21,7 +23,3 @@
     ></i>
   </div>
 </span>
-<app-modal
-  *ngIf="modalService.showModal()"
-  [rowData]="modalService.getRowData()"
-></app-modal>

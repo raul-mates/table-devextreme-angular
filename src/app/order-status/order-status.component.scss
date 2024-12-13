@@ -1,6 +1,5 @@
 .order-status {
   &-filter-item {
-    display: inline-block;
     padding: 5px 10px;
     border-radius: 20px;
     margin: 5px 0;
@@ -10,6 +9,10 @@
     color: white;
     transition: background-color 0.2s ease;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
   }
 
   &-approved {

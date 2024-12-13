@@ -1,9 +1,12 @@
-<dx-toolbar id="toolbar" style="margin-bottom: 21px">
-  <dxi-item
-    widget="dxButton"
-    [options]="buttonOptions"
-    location="after"
-  ></dxi-item>
-</dx-toolbar>
+<div
+  class="main-container"
+  [ngClass]="router.url === '/table' ? 'table-view' : ''"
+>
+  <router-outlet></router-outlet>
 
-<app-drawer [isOpen]="isDrawerOpen()"></app-drawer>
+  <app-modal
+    *ngIf="modalService.showModal()"
+    [rowData]="modalService.getRowData()"
+    [arrayData]="fullData"
+  ></app-modal>
+</div>

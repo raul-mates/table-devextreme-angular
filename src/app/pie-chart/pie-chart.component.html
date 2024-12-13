@@ -1,0 +1,15 @@
+<dx-pie-chart
+  [dataSource]="pieChartData"
+  type="doughnut"
+  palette="statusColors"
+  title="Order Distribution by Status"
+  [customizePoint]="customizePoint"
+>
+  <dxo-tooltip
+    [enabled]="true"
+    [customizeTooltip]="customizeTooltip"
+  ></dxo-tooltip>
+  <dxi-series argumentField="status" valueField="count">
+    <dxo-label [visible]="true" format="fixedPoint" />
+  </dxi-series>
+</dx-pie-chart>

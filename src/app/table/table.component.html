@@ -1,18 +1,21 @@
-<div class="flex-container" style="padding: 0 20px">
+<div class="flex-container">
   <div class="table-container">
     <dx-data-grid
       [dataSource]="dataSource"
       [allowColumnResizing]="true"
       [columnAutoWidth]="true"
-      [width]="'fit-content'"
+      [width]="'100%'"
       [height]="'800px'"
       keyExpr="customerId"
       [showColumnLines]="true"
       [showRowLines]="true"
       [showBorders]="true"
       id="gridContainer"
+      [scrolling]="{ mode: 'virtual', columnRenderingMode: 'virtual' }"
     >
       <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-paging [enabled]="true"></dxo-paging>
+      <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
       <dxi-column
         dataField="brand"
@@ -20,10 +23,9 @@
         cellTemplate="brandTemplate"
         [cssClass]="'myClass'"
         [allowEditing]="false"
+        [fixed]="true"
+        [fixedPosition]="'left'"
         [allowFiltering]="true"
-        headerFilter="{
-      dataSource: brandDataSource
-    }"
       >
         <dxo-header-filter [dataSource]="brandHeaderFilter"></dxo-header-filter>
         <div *dxTemplate="let data of 'brandTemplate'">
@@ -36,6 +38,9 @@
         caption="Customer Number"
         [cssClass]="'myClass'"
         [allowEditing]="false"
+        [fixed]="true"
+        [width]="'67.5px'"
+        [fixedPosition]="'left'"
         [allowFiltering]="false"
       ></dxi-column>
 
@@ -79,6 +84,7 @@
         dataField="city"
         caption="City"
         [allowEditing]="false"
+        [width]="'95px'"
         [cssClass]="'myClass'"
         [allowFiltering]="false"
       ></dxi-column>
@@ -87,11 +93,15 @@
         dataField="orderStatus"
         caption="Order Status"
         [allowFiltering]="true"
+        [width]="'150px'"
         [cssClass]="'myClass'"
         cellTemplate="orderStatusTemplate"
       >
         <div *dxTemplate="let data of 'orderStatusTemplate'">
-          <app-order-status [data]="data.data"></app-order-status>
+          <app-order-status
+            [data]="data.data"
+            (statusChanged)="handleStatusChanged($event)"
+          ></app-order-status>
         </div>
       </dxi-column>
 
@@ -114,10 +124,9 @@
             (blur)="onRejectReasonChange($event, data.data)"
           />
           <div class="reject-reason__icon-container">
-            <fa-icon
-              [icon]="faPencilAlt"
-              class="reject-reason__icon-container__edit-icon"
-            ></fa-icon>
+            <i
+              class="fas fa-pencil-alt reject-reason__icon-container__edit-icon"
+            ></i>
           </div>
         </div>
       </dxi-column>
@@ -235,6 +244,8 @@
         caption=""
         [allowEditing]="false"
         [cssClass]="'myClass'"
+        [fixed]="true"
+        [fixedPosition]="'right'"
         [allowFiltering]="false"
         cellTemplate="cellTemplate"
       >

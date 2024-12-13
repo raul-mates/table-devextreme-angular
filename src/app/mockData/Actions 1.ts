@@ -1,4 +1,6 @@
-export const ACTIONS = {
+import { Action } from '../shared/interfaces';
+
+export const ACTIONS: Record<string, Action> = {
   APPROVE: {
     value: 'APPROVE',
     label: 'APPROVE ORDER',

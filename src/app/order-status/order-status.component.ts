@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalService } from '../modal.service';
+import { ALL_STATUS } from '../shared/all-status';
+import { TableDataInterface } from '../shared/interfaces';
 
 @Component({
   selector: 'app-order-status',
@@ -7,35 +9,32 @@ import { ModalService } from '../modal.service';
   styleUrls: ['./order-status.component.scss'],
 })
 export class OrderStatusComponent {
-  @Input() data!: any;
+  @Input() data!: TableDataInterface;
   @Input() rejectReason: string = '';
-  @Input() rowData!: any;
+  @Input() rowData!: TableDataInterface;
+
+  @Output() statusChanged = new EventEmitter<TableDataInterface>();
+
+  ALL_STATUS = ALL_STATUS;
 
   constructor(public modalService: ModalService) {}
 
   getOrderStatusLabel(orderStatus: string): string {
-    const orderStatusMap: { [key: string]: string } = {
-      APPROVED: 'Received ERP',
-      REOPENED: 'Reopened',
-      NOT_CREATED_YET: 'Not created',
-      SUBMITTED: 'Submitted',
-      REJECTED: 'Rejected',
-      OPEN: 'Open',
-    };
-
-    return orderStatusMap[orderStatus] || 'Unknown Brand';
+    return ALL_STATUS[orderStatus].label || 'Unknown Status';
   }
 
-  handleReopenClicked(status: string, rowData: any) {
-    if (status === 'REOPENED') {
+  handleReopenClicked(status: string, rowData: TableDataInterface) {
+    if (status === ALL_STATUS['REOPENED'].value) {
       this.modalService.openModal(rowData);
       this.modalService.modalForInsights.set(false);
     }
   }
 
-  handleIconClicked(data: any, element: HTMLElement) {
+  handleIconClicked(data: TableDataInterface, element: HTMLElement) {
     data.orderStatus = element.classList.contains('icon-approve')
-      ? 'APPROVED'
-      : 'REJECTED';
+      ? ALL_STATUS['APPROVED'].value
+      : ALL_STATUS['REJECTED'].value;
+
+    this.statusChanged.emit(this.data);
   }
 }

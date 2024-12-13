@@ -1,0 +1,20 @@
+<div class="dialog-background" *ngIf="dialogService.isDialogOpen()">
+  <div class="dialog-content">
+    <h3 class="dialog-content__title">{{ message }}</h3>
+
+    <div class="dialog-content__buttons-container">
+      <button
+        class="dialog-content__buttons-container__button dialog-content__buttons-container__button--confirm"
+        (click)="confirmDialog()"
+      >
+        Confirm
+      </button>
+      <button
+        class="dialog-content__buttons-container__button dialog-content__buttons-container__button--cancel"
+        (click)="closeDialog()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

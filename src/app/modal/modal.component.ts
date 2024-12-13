@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../modal.service';
-import { MockDataService } from '../mockData/Table data';
+import { TableDataInterface } from '../shared/interfaces';
 
 @Component({
   selector: 'app-modal',
@@ -8,37 +8,30 @@ import { MockDataService } from '../mockData/Table data';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent implements OnInit {
-  @Input() rowData: any;
+  @Input() rowData!: TableDataInterface;
+  @Input() arrayData!: TableDataInterface[];
   inputValue: string = '';
-  ordersData: any;
-  chartData: any;
 
-  constructor(
-    public modalService: ModalService,
-    public mockDataService: MockDataService
-  ) {}
+  constructor(public modalService: ModalService) {}
 
   ngOnInit(): void {
     if (this.rowData && this.rowData.rejectReason) {
       this.inputValue = this.rowData.rejectReason;
     }
-
-    this.ordersData = this.mockDataService
-      .getData()
-      .filter((order: any) => order.orderId && order.orderPieces)
-      .map((order: any) => ({
-        orderId: order.orderId,
-        orderPieces: order.orderPieces,
-        customerName: order.customerName,
-      }));
   }
 
   onSaveClicked() {
     this.rowData.rejectReason = this.inputValue;
   }
 
-  onModalBackgroundClicked(e: any) {
-    if (e.target.classList.contains('modal-background'))
+  onModalBackgroundClicked(e: MouseEvent) {
+    console.log(e.target);
+    if (
+      e.target instanceof HTMLElement &&
+      e.target.classList.contains('modal-background')
+    ) {
       this.modalService.closeModal();
+    }
+    e.stopPropagation();
   }
 }

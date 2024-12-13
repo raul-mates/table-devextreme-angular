@@ -1,77 +1,79 @@
-import { Component, OnInit } from '@angular/core';
-import { MockDataService } from '../mockData/Table data';
+import { Component, Input } from '@angular/core';
+import {
+  TableDataInterface,
+  ChartData,
+  OrderSummary,
+} from '../shared/interfaces';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrl: './chart.component.scss',
+  styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
-  ordersData: any;
-  chartData: any;
+export class ChartComponent {
+  private _data: TableDataInterface[] = [];
+  ordersData: OrderSummary[] = [];
+  chartData: ChartData[] = [];
 
-  constructor(public mockDataService: MockDataService) {}
+  @Input()
+  set data(value: TableDataInterface[]) {
+    this._data = value;
+    this.updateChartData();
+  }
 
-  ngOnInit(): void {
-    this.ordersData = this.mockDataService
-      .getData()
-      .filter((order: any) => order.orderId && order.orderPieces)
-      .map((order: any) => ({
+  updateChartData(): void {
+    this.ordersData = this._data
+      .filter((order: TableDataInterface) => order.orderId && order.orderPieces)
+      .map((order: TableDataInterface) => ({
         orderId: order.orderId,
         orderPieces: order.orderPieces,
         customerName: order.customerName,
-      }));
+      })) as OrderSummary[];
 
     this.chartData = this.getChartData();
   }
 
-  getChartData() {
-    return [
-      {
-        range: '<50',
-        ordersCount: this.getOrdersInRange(0, 50).length,
-        orders: this.getOrdersInRange(0, 50),
-      },
-      {
-        range: '50 - 100',
-        ordersCount: this.getOrdersInRange(50, 100).length,
-        orders: this.getOrdersInRange(50, 100),
-      },
-      {
-        range: '100 - 200',
-        ordersCount: this.getOrdersInRange(100, 200).length,
-        orders: this.getOrdersInRange(100, 200),
-      },
-      {
-        range: '200 - 300',
-        ordersCount: this.getOrdersInRange(200, 300).length,
-        orders: this.getOrdersInRange(200, 300),
-      },
-      {
-        range: '>300',
-        ordersCount: this.getOrdersInRange(300, Infinity).length,
-        orders: this.getOrdersInRange(300, Infinity),
-      },
+  getChartData(): ChartData[] {
+    const ranges = [
+      { label: '<50', min: 0, max: 50 },
+      { label: '50 - 100', min: 50, max: 100 },
+      { label: '100 - 200', min: 100, max: 200 },
+      { label: '200 - 300', min: 200, max: 300 },
+      { label: '>300', min: 300, max: Infinity },
     ];
+
+    return ranges.map((range) => {
+      const ordersInRange = this.getOrdersInRange(range.min, range.max);
+      return {
+        range: range.label,
+        ordersCount: ordersInRange.length,
+        orders: ordersInRange,
+      };
+    });
   }
 
-  getOrdersInRange(min: number, max: number) {
+  getOrdersInRange(min: number, max: number): OrderSummary[] {
     return this.ordersData
       .filter(
-        (order: any) => order.orderPieces >= min && order.orderPieces < max
+        (order: OrderSummary) =>
+          order.orderPieces >= min && order.orderPieces < max
       )
-      .map((order: any) => ({
+      .map((order: OrderSummary) => ({
         orderId: order.orderId,
         customerName: order.customerName,
+        orderPieces: order.orderPieces,
       }));
   }
 
-  customTooltip = (info: any) => {
+  customTooltip = (info: {
+    argumentText: string;
+    point: { data: { orders: OrderSummary[] } };
+  }) => {
     const range = info.argumentText;
     const orders = info.point.data.orders;
 
     let orderList = '<ul>';
-    orders.forEach((order: any) => {
+    orders.forEach((order: OrderSummary) => {
       orderList += `<li>${order.orderId} - ${order.customerName}</li>`;
     });
     orderList += '</ul>';

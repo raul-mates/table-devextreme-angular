@@ -1,0 +1,83 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 21px;
+  background-color: #fff;
+  margin: 16px 0;
+
+  &-title-container {
+    overflow: hidden;
+  }
+
+  &-title {
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &-list-container {
+    overflow: scroll;
+    width: 100%;
+    max-width: 1012px;
+  }
+
+  &-list-ul {
+    display: flex;
+    list-style: none;
+    gap: 16px;
+  }
+
+  &-list-item {
+    padding: 16px;
+    border-radius: 5px;
+    border: 3px solid #333;
+
+    &__input {
+      border: none;
+      text-align: center;
+      font-size: 16px;
+
+      &:focus {
+        border: none;
+        outline: none;
+      }
+    }
+  }
+
+  &-input {
+    background-color: #484747;
+    color: #fff;
+    padding: 15.5px 57px;
+    border: 3px solid #484747;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+
+    &:disabled,
+    &[disabled] {
+      cursor: not-allowed;
+      background-color: #545454;
+      color: #fff;
+      border: 3px solid #545454;
+
+      &:hover {
+        background-color: #727272;
+        color: #fff;
+        border: 3px solid #727272;
+      }
+    }
+
+    &:hover {
+      background: #fff;
+      color: #191919;
+      transition: all 0.1s ease-in;
+    }
+  }
+
+  &-list-and-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+  }
+}

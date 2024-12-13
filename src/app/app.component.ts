@@ -1,4 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { DrawerService } from './drawer/drawer.service';
+import { TableDataInterface } from './shared/interfaces';
+import { MockDataService } from './mockData/Table data';
+import { ModalService } from './modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +12,23 @@ import { Component, signal } from '@angular/core';
 })
 export class AppComponent {
   title = 'table-project';
-  isDrawerOpen = signal(false);
-  buttonOptions: any = {
+  fullData: TableDataInterface[] = [];
+
+  buttonOptions = {
     icon: 'menu',
     onClick: () => {
-      this.isDrawerOpen.set(!this.isDrawerOpen());
+      this.drawerService.toggleDrawer();
     },
   };
+
+  constructor(
+    public drawerService: DrawerService,
+    public mockDataService: MockDataService,
+    public modalService: ModalService,
+    public router: Router
+  ) {
+    this.drawerService.getTableData().subscribe((response) => {
+      this.fullData = response;
+    });
+  }
 }

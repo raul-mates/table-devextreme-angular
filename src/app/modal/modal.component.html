@@ -37,7 +37,7 @@
       </div>
     </div>
     <div *ngIf="modalService.modalForInsights() === true">
-      <app-chart></app-chart>
+      <app-chart [data]="arrayData"></app-chart>
     </div>
   </div>
 </div>

@@ -1,0 +1,43 @@
+<div *ngFor="let operation of operations">
+  <div class="card">
+    <div class="card-title-container">
+      <h2 id="operation-{{ operation.operationLabel }}" class="card-title">
+        {{ operation.operationLabel }}
+      </h2>
+    </div>
+    <div class="card-list-and-button-wrapper">
+      <div class="card-list-container">
+        <ul class="card-list-ul">
+          <li *ngFor="let param of operation.params" class="card-list-item">
+            <input
+              type="text"
+              [(ngModel)]="param.value"
+              placeholder="{{ param.key }} ( {{ param.type }} )"
+              class="card-list-item__input"
+            />
+          </li>
+          <li
+            *ngFor="let pathVariable of operation.pathVariables"
+            class="card-list-item"
+          >
+            <input
+              type="text"
+              [(ngModel)]="pathVariable.value"
+              placeholder="{{ pathVariable.key }} ( {{ pathVariable.type }} )"
+              class="card-list-item__input"
+            />
+          </li>
+        </ul>
+      </div>
+      <div class="card-input-container">
+        <input
+          type="submit"
+          value="Submit"
+          class="card-input"
+          [disabled]="!areAllFieldsValid(operation)"
+          (click)="onSubmit(operation)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
