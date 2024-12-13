@@ -387,6 +387,42 @@ export const SERVICE_MANAGEMENT = [
             value: null,
             isRequierd: false,
           },
+          {
+            key: 'collection',
+            type: 'string',
+            value: null,
+            isRequierd: false,
+          },
+          {
+            key: 'campaign',
+            type: 'long',
+            value: null,
+            isRequierd: false,
+          },
+          {
+            key: 'brand',
+            type: 'string',
+            value: null,
+            isRequierd: false,
+          },
+          {
+            key: 'collection',
+            type: 'string',
+            value: null,
+            isRequierd: false,
+          },
+          {
+            key: 'campaign',
+            type: 'long',
+            value: null,
+            isRequierd: false,
+          },
+          {
+            key: 'brand',
+            type: 'string',
+            value: null,
+            isRequierd: false,
+          },
         ],
       },
       {

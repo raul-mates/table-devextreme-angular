@@ -41,7 +41,5 @@ export class MainPageComponent implements OnInit {
     if (serviceFinder && serviceFinder.operations) {
       this.selectedOperations = serviceFinder.operations;
     }
-
-    console.log(this.selectedOperations);
   }
 }
